@@ -20,3 +20,12 @@
   font-size: 1.2em;
   font-weight: bold;
 }
+
+#volunteer-experience li{
+  border-radius: 15px;
+  background-color: #f9e7dc;
+}
+
+li:first-child {
+  font-weight: bold;
+}
