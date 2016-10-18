@@ -15,3 +15,8 @@
 .accomplishments {
   font-size: .8em;
 }
+
+.accomplishments:first-letter {
+  font-size: 1.2em;
+  font-weight: bold;
+}
