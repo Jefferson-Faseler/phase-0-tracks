@@ -1,3 +1,42 @@
 * {
+  font-family: Tahoma;
   margin: 0;
+  background-color: #27566B;
+}
+
+p:hover, h1:hover, h2:hover, code:hover, a:hover, footer:hover {
+  color: yellow;
+}
+
+header {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 20px;
+  background-color: #879094;
+  border-radius: 5px;
+}
+
+.column-2{
+  background-color: #AA8A39;
+  padding: 15px;
+  display:inline-block;
+  width:45%;
+  vertical-align:top;
+  border-radius: 5px;
+}
+
+.column-1{
+  background-color: #AA4F39;
+  padding: 15px;
+  display:inline-block;
+  width:45%;
+  vertical-align:top;
+  border-radius: 5px;
+}
+
+footer {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: #983352;
 }
