@@ -4,9 +4,9 @@ num_emp = gets.chomp.to_i
 def age_verifier( x, y)
   current_year = Time.now.year
     if x + y == current_year
-    pass = true
+      true
   else 
-    pass = false
+      false
   end
 end
 
@@ -23,14 +23,18 @@ until num_emp == 0
   puts "Would you like to enroll in the company's health insurance?"
     insurance = gets.chomp
   
-  until allergies == "done" || allergies == "sunshine"
+  begin
     puts "Do you have any allergies?"
+    puts "List them one at a time and type done when finished"
     allergies = gets.chomp
-  end
+      if allergies == "sunshine"
+        break
+      end
+  end until allergies == "done"
 
-  if age_verifier( age, dob) == true && (bread == "yes" || insurance == "yes")
+  if allergies != "sunshine" && (age_verifier( age, dob) == true && (bread == "yes" || insurance == "yes")) 
     puts "Probably not a vampire"
-  elsif age_verifier( age, dob) == false && (bread == "no" || insurance == "no") || allergies == "sunshine"
+  elsif allergies == "sunshine" || (age_verifier( age, dob) == false && (bread == "no" || insurance == "no"))
     puts "Probably a vampire"
   elsif age_verifier( age, dob) == false && bread == "no" && insurance == "no"
     puts "Almost certainly a vampire"
