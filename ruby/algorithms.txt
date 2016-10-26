@@ -1,0 +1,57 @@
+Release 0
+Elevator
+-To operate an elevator.
+  -If people are in the elevator.
+    -Shout out your desired floor followed by "please".
+    -Wait five seconds for a human to push the button.
+  -If the human did not respond or the humans have exited the elevator already.
+    -Until you see the buttons for operating the elevator, move to the right until a wall is reached and turn 90 degrees to the right. 
+    -Approach the buttons until they are within reaching distance.
+      -To go to a specific floor, press the button with the corresponding number displayed on the button.
+      -To close the doors press the button with this symbol >|< .
+      -To open the doors press the button with this symbol <|>.
+      -To call for assistance in the case of an emergency press the button with this symbol 📞.
+        -this button is often outlined in red.
+  -If a human enters the elevator and calls out for a floor, push the corresponding button.
+-To travel between floors with the elevator.
+  -Press the button corresponding with the floor you desire to travel to.
+    -Wait until the doors open.
+        -If the doors opened and it is not your floor wait until the elevator travels to your floor before exiting.
+
+
+Release 1
+How to ride a subway
+-Approach the subway turnstiles
+  -Withdraw your metrocard and swipe the card quickly through the card swiper.
+    -Until the turnstiles let you enter reswipe, slowing your swipe speed down by 10%.
+      -When you reach 0% do not reattempt.
+      -Apologize for the inconvenience to anyone around you. Back up and approach the emergency exit. 
+        -Wait until people exit through the emergency exit and walk through the exit with confidence, as if you are supposed to be doing it. 
+  -Look for signs that direct you towards what train you need.
+    -When you find the signs for the train you need.
+    -Ensure the train is going to the correct borough or direction.
+    -Follow the direction of the signs.
+  -When you have reached the loading platform, wait until the correct train arrives. 
+    -Do not stand on the yellow platform.
+    -Do not sit on wooden benches, they have bed bugs.
+    -When the correct train arrives, approach the train until you are 7 seven feet away from an entrance to a train car.
+    -Wait until passengers attempting to exit have exited the train. 
+    -Do not wait more than nine seconds, otherwise the doors will close before you enter.
+  -Riding the train.
+    -After passengers have exited, enter the train.
+    -Find a seat to sit in.
+      -If you cannot find a seat to sit in, stand and hold the bar for support while the train moves. 
+      -Do not make eye contact with anyone. Simply stare at nothing. 
+      -If someone enters the train and asks for money or plays music, ignore them. 
+        -Unless you enjoy their music, then give them money.
+    -You will not be able to understand any announcements over the speakers.
+  -Exiting the train. 
+    -When you are one stop away from your destination.
+      -If there is someone between you and the door, you can make eye contact at this point and nod towards the door to communicate you will need out soon. 
+        -Wait three seconds for a response.
+        -If they do not respond proceed to the next step.
+      -Else, approach the double doors so that there are entrance/exits on either side of you.
+      -When the doors open at your destination, do not let people entering keep you from exiting. Continue through them, without knocking them over. 
+    -If you need to exit the station.
+      -Follow signs that say EXIT in white letters on a red background until you have exited the train station.
+    -If you need to transfer to another train, repeat the above steps, beginning with following signs to your train.
