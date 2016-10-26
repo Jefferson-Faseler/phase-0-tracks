@@ -1,15 +1,19 @@
 puts "How many employees will be processed?"
 num_emp = gets.chomp.to_i
 
+# method is used to see if an employee's age and birthyear add up to the 
+# current year
 def age_verifier( x, y)
   current_year = Time.now.year
     if x + y == current_year
       true
-  else 
+    else 
       false
-  end
+    end
 end
 
+# loop is used to repeat the quiz depending on the number of employees
+# entered on line 2
 until num_emp == 0
   puts "#{num_emp} quizzes remaining"
   puts "What is your name?"
@@ -23,6 +27,7 @@ until num_emp == 0
   puts "Would you like to enroll in the company's health insurance?"
     insurance = gets.chomp
   
+# loop for employee to list allergies until they either type "done" pr "sunshine"
   begin
     puts "Do you have any allergies?"
     puts "List them one at a time and type done when finished"
@@ -31,6 +36,17 @@ until num_emp == 0
         break
       end
   end until allergies == "done"
+
+=begin 
+  the following logic does not give undeniable proof, but only probabilities
+  if an employee shows no signs with the questions, but enters sunshine as an 
+  allergy it will trigger the "probably a vampire" result. However, there are
+  other signs that can show a stronger correlation than an allergy to sunshine. 
+  Thus, we see that despite the answers for the last questions, a name can 
+  trigger a very positive probability. It is possible for an employee to get an 
+  inconclusive result, even if they answer in appropriate yes/no terms and 
+  integers, respective to the question.
+=end
 
   if allergies != "sunshine" && (age_verifier( age, dob) == true && (bread == "yes" || insurance == "yes")) 
     puts "Probably not a vampire"
