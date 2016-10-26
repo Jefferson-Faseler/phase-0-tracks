@@ -47,4 +47,4 @@ until num_emp == 0
   num_emp = num_emp - 1
 end
 
-puts "Finished"
+print "Actually, never mind! What do these questions have to do with anything? Let's all be friends."
