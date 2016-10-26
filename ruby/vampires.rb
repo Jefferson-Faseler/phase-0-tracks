@@ -18,11 +18,6 @@ def age_verifier( x, y)
   end
 end
 
-wolves_like_sunshine = true
-wolves_like_garlic = true
-vampires_like_sunshine = false
-vampires_like_garlic = false
-
 if age_verifier( age, dob) == true && (bread == "yes" || insurance == "yes")
   puts "Probably not a vampire"
 elsif age_verifier( age, dob) == false && (bread == "no" || insurance == "no")
