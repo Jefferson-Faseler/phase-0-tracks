@@ -2,7 +2,7 @@ puts "How many employees will be processed?"
 num_emp = gets.chomp.to_i
 
 # method is used to see if an employee's age and birthyear add up to the 
-# current year
+# current year. Only works if they have alraedy had their birthday in the year.
 def age_verifier( x, y)
   current_year = Time.now.year
     if x + y == current_year
