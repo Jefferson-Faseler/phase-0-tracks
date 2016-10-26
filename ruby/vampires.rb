@@ -27,7 +27,7 @@ until num_emp == 0
   puts "Would you like to enroll in the company's health insurance?"
     insurance = gets.chomp
   
-# loop for employee to list allergies until they either type "done" pr "sunshine"
+# loop for employee to list allergies until they either type "done" or "sunshine"
   begin
     puts "Do you have any allergies?"
     puts "List them one at a time and type done when finished"
