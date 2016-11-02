@@ -42,4 +42,13 @@ pets = gets.chomp.to_i      #takes in number of pets
     puts "There are #{pets} pets."
   end
 
+client_info = {
+  age: age,
+  children: children,
+  decor_theme: decor_theme,
+  creativity: creativity,
+  pets: pets,
+  types_of_pets: types_of_pets
+}
 
+p client_info
