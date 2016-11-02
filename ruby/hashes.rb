@@ -1,10 +1,8 @@
-# Print it and exit
-
 def boolean_converter(answer)
     if answer == "yes"
-    answer = true
+    true
   else
-    answer = false
+    false
   end
 end
 
@@ -64,15 +62,26 @@ p client_info
 # Give the user the opportunity to update a key 
 puts "Do you need to make any changes to the client details?"
 detail_changes = gets.chomp
-boolean_converter(detail_changes)
-  if detail_changes == true       #if answer "yes" user can change detail
-    puts "Which detail would you like to change?"
-    detail = gets.chomp.to_sym    
-    puts client_info[detail]
-    puts "Type in the new detail" 
-    client_info[detail] = gets.chomp
-  end
 
+#if answer "yes" user can change detail
+if boolean_converter(detail_changes) == true       
+  puts "Which detail would you like to change?"
+  detail = gets.chomp.to_sym    
+  puts client_info[detail]
+  puts "Type in the new detail" 
+  client_info[detail] = gets.chomp
+end
+
+# Print it and exit
 puts client_info
+
+
+
+
+
+
+
+
+
 
 
