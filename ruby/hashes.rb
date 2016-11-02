@@ -26,6 +26,11 @@ decor_theme = gets.chomp
 
 puts "Designer freedom?:"
 creativity = gets.chomp
+  if creativity == "yes"    #Converts answer to boolean
+    creativity = true
+  else
+    creativity = false
+  end
 
 puts "Pets:"
 pets = gets.chomp.to_i      #takes in number of pets
