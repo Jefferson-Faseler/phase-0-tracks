@@ -27,7 +27,7 @@ puts "Decor theme:"
 decor_theme = gets.chomp
 
 puts "Designer freedom?:"
-creativity = boolean_converter(gets.chomp)
+creativity = boolean_converter(gets.chomp) #saves user input as boolean
 
 puts "Pets:"
 pets = gets.chomp.to_i      #takes in number of pets
