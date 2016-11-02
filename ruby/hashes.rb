@@ -1,5 +1,6 @@
+# Boolean converter designed for strings, not other data types
 def boolean_converter(answer)
-    if answer == "yes"
+    if answer == "yes" || "y" || "Yes"
     true
   else
     false
