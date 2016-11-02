@@ -6,6 +6,8 @@ def boolean_converter(answer)
   else
     answer = false
   end
+end
+
 ## INTERIOR DESIGNER CLIENT LIST ##
 
 # Ask user for client name, age, number of children,
