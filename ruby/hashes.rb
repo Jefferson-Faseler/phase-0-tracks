@@ -27,8 +27,7 @@ puts "Decor theme:"
 decor_theme = gets.chomp
 
 puts "Designer freedom?:"
-creativity = gets.chomp
-boolean_converter(creativity)
+creativity = boolean_converter(gets.chomp)
 
 puts "Pets:"
 pets = gets.chomp.to_i      #takes in number of pets
@@ -73,4 +72,4 @@ if boolean_converter(detail_changes) == true
 end
 
 # Print it and exit
-puts client_info
+p client_info
