@@ -1,9 +1,11 @@
-
-# Print the hash when the designer has finished all prompts
-# Give the user the opportunity to update a key 
-# (update method using desired key as value in .each)
 # Print it and exit
 
+def boolean_converter(answer)
+    if answer == "yes"
+    answer = true
+  else
+    answer = false
+  end
 ## INTERIOR DESIGNER CLIENT LIST ##
 
 # Ask user for client name, age, number of children,
@@ -26,11 +28,7 @@ decor_theme = gets.chomp
 
 puts "Designer freedom?:"
 creativity = gets.chomp
-  if creativity == "yes"    #Converts answer to boolean
-    creativity = true
-  else
-    creativity = false
-  end
+boolean_converter(creativity)
 
 puts "Pets:"
 pets = gets.chomp.to_i      #takes in number of pets
@@ -47,6 +45,7 @@ pets = gets.chomp.to_i      #takes in number of pets
     puts "There are #{pets} pets."
   end
 
+# hash containing all values
 client_info = {
   age: age,
   children: children,
@@ -56,4 +55,22 @@ client_info = {
   types_of_pets: types_of_pets
 }
 
+# Print the hash when the designer has finished all prompts
 p client_info
+
+
+# Give the user the opportunity to update a key 
+puts "Do you need to make any changes to the client details?"
+detail_changes = gets.chomp
+boolean_converter(detail_changes)
+  if detail_changes == true       #if answer "yes" user can change detail
+    puts "Which detail would you like to change?"
+    detail = gets.chomp.to_sym    
+    puts client_info[detail]
+    puts "Type in the new detail" 
+    client_info[detail] = gets.chomp
+  end
+
+puts client_info
+
+
