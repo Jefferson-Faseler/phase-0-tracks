@@ -1,10 +1,6 @@
 # Boolean converter designed for strings, not other data types
 def boolean_converter(answer)
-  if answer == "yes" || answer == "y" || answer ==  "Yes"
-    true
-  else
-    false
-  end
+  answer == "yes" || answer == "y" || answer ==  "Yes"
 end
 
 ## INTERIOR DESIGNER CLIENT LIST ##
@@ -33,16 +29,13 @@ creativity = boolean_converter(gets.chomp) #saves user input as boolean
 puts "Pets:"
 pets = gets.chomp.to_i      #takes in number of pets
   if pets > 0               #if there are any pets it asks questions
-    types_of_pets = Array.new   #intitiates an array for each type of pet
     # User can give each type individually or each type collectively
     puts "There are #{pets} pets, input all the types:"
     pet_type = gets.chomp
     # Adds values to the array for each type and splits them by each space
     types_of_pets = pet_type.split(/\s+/)
     types_of_pets.uniq! #removes all duplicate animal types
-    p types_of_pets
-  else
-    puts "There are #{pets} pets."
+    puts "The pets your client has are #{types_of_pets.join(', ')}"
   end
 
 # hash containing all values
@@ -64,7 +57,7 @@ puts "Do you need to make any changes to the client details?"
 detail_changes = gets.chomp
 
 #if answer "yes" user can change detail
-if boolean_converter(detail_changes) == true
+if boolean_converter(detail_changes)
   puts "Which detail would you like to change?"
   detail = gets.chomp.to_sym
   puts client_info[detail]
