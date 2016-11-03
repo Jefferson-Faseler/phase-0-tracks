@@ -12,3 +12,25 @@ def take_array(array, integer)
 end
 
 take_array(arr, 3)
+
+# make a starting array of 0 and 1
+# add the two previous numbers and then put the sum in the array
+# again add the two last numbers of the array and 
+# put sum on end of array
+# continue until argument value is met
+
+def fibonacci_finder(num)
+  fib_arr = [ 0, 1]
+  i = 2
+  sum = 0
+  while i < num
+    sum = fib_arr[-1] + fib_arr[-2]
+    #DRIVER CODE# 
+    # puts "#{fib_arr[-2]} and #{fib_arr[-1]} make #{sum}" 
+    fib_arr << sum
+    i += 1
+  end
+  puts fib_arr.last
+end
+
+fibonacci_finder(100)
