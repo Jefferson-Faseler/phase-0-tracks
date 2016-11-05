@@ -70,9 +70,12 @@ def alias_dispenser(name)
   organizer(name_array)
 end
 
+names_and_aliases = {}
 puts "Welcome, agent"
 puts "Enter your first and last name to recieve your alias."
 agent_name = gets.chomp
+alias_name = alias_dispenser(agent_name)
+names_and_aliases[agent_name] = alias_name
 
 until agent_name == "quit"
   
@@ -80,5 +83,13 @@ until agent_name == "quit"
   puts "If you want another alias, enter a new first and last name."
   puts "Otherwise, type 'quit'"
   agent_name = gets.chomp
+  names_and_aliases[agent_name] = alias_name
+end
 
-end 
+names_and_aliases.each do |agent_name, alias_name|
+  if agent_name == 'quit'
+    puts "Please close the program, agent."
+  else
+  puts "#{agent_name} is now #{alias_name}."
+  end
+end
