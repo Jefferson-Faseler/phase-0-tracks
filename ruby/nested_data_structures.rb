@@ -173,3 +173,4 @@ annas_play_time = bookshelf[:bottom_left][:childrens_footwear]
 bookshelf[:bottom_left].delete(:childrens_footwear)
 p bookshelf[:bottom_left]
 puts "#{annas_play_time} is now scattered across the house... gotta love her still"
+puts "I'm glad I got to show you some of my life."
