@@ -20,7 +20,9 @@ def alias(name)
     v_index = 0
     vowels = ['a','e','i','o','u']
     vowels.each {|i| 
-      if i == vowel
+      if vowel == 'u'
+        vowel = 'a'
+      elsif i == vowel
         vowel = vowels[v_index + 1]
       else
         v_index += 1
