@@ -47,9 +47,13 @@ def alias_dispenser(name)
     consonant
   end
 
-  def capitalize(name_array)
-    num_names = name_array.length
-    
+  def organizer(_alias)
+    alias_to_string = _alias.join.capitalize
+    string_to_array = alias_to_string.split.reverse
+    new_first_name = string_to_array[0].capitalize
+    new_last_name = string_to_array[1].capitalize
+    new_name_array = new_first_name + ' ' + new_last_name
+  end
 
   name_array = name.downcase.split('')
   name_array.map!{|letter|
@@ -59,7 +63,7 @@ def alias_dispenser(name)
         vowel_swap(letter)
       end
   }
-  name_array.join.split.capitalize.join
+  organizer(name_array)
 end
 
 print alias_dispenser("Felicia Torres")
