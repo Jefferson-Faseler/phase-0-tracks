@@ -1,26 +1,26 @@
 ## ITEMS IN MY BOOKSHELF ##
 
 bookshelf = { 
-  top: = {
-    books: = [
+  top: {
+    books: [
       "HTML & CSS by Jon Duckett",
       "Javascript & JQuery by Jon Duckett",
       "journal 5"
     ],
-    electronics: = [
+    electronics: [
       "Children's Music CD's",
       "Leapfrog Tablet",
       "Singing Barbie doll (she can't see it this high up)"
     ],
-    ollectibles: = [
+    ollectibles: [
       "Texas Rangers snapback cap",
       "Daughter's painting",
       "Boba Fett rare all-white concept armor action figure",
       "Dad's pocket knife"
     ],
   },
-  upper_left: = {
-    books: = [
+  upper_left: {
+    books: [
       "journal 1",
       "journal 2",
       "journal 3",
@@ -31,7 +31,7 @@ bookshelf = {
       "Mary Oliver's Poetry Handbook",
       "All Creatures Great and Small"
     ],
-    electronics: = [
+    electronics: [
       "USB charger",
       "Headphones",
       "Phone cords",
@@ -39,10 +39,10 @@ bookshelf = {
       "Headlamp",
       "Flashlight"
     ],
-    art_supplies: = [
-      assorted_brush_pens: = {
+    art_supplies: [
+      assorted_brush_pens: {
         s_brush: "black",
-        m_brush: = {
+        m_brush: {
           black: "black",
           blue: "blue",
           sage: "sage",
@@ -57,7 +57,7 @@ bookshelf = {
       drawing_pad: "small",
       drawing_journal: "small drawing journal"
     ],
-    collectibles: = [
+    collectibles: [
       "Beard comb inscribed 'Daddy's Whiskers'",
       "Boba Fett action figure",
       "Harry Potter Platform 9 3/4 ticket",
@@ -65,8 +65,8 @@ bookshelf = {
       "Picture of Dad"
     ],
   },  
-  upper_right: = {
-    hygiene: = [
+  upper_right: {
+    hygiene: [
       "Deodorant",
       "Lotion",
       "Floss",
@@ -75,16 +75,18 @@ bookshelf = {
       "Nail polish",
       "Some weird lotion I can't explain",
     ],
-    "Texas Rangers coffee mug"
+    cups: [
+      "Texas Rangers coffee mug"
+    ],
   },
-  mid_left: = {
-    file_folders: = {
-      personal_records: = [
+  mid_left: {
+    file_folders: {
+      personal_records: [
         "Letters",
         "Identification",
         "sticker sheet",
       ],
-      paid_bills: = [
+      paid_bills: [
         "ConEd",
         "National Grid",
         "Optimum",
@@ -93,7 +95,7 @@ bookshelf = {
         "Life Insurance",
         "Credit Cards"
       ],
-      to_be_completed: = [
+      to_be_completed: [
         "Daughter's day-care papers",
         "MTA Incident Report",
         "Parking Ticket",
@@ -101,20 +103,20 @@ bookshelf = {
       ],
     },
   },
-  mid_right: = {
-    electronics: = [
+  mid_right: {
+    electronics: [
       "Power strip",
       "Heating pad",
       "VR Headset",
       "Kindle"
     ],
-    books: = [
+    books: [
       "Bible",
       "Journal 6"
     ],
   },
-  bottom_left: = {
-    childrens_footwear: = [
+  bottom_left: {
+    childrens_footwear: [
       "Cat shoes",
       "Minnie Mouse shoes",
       "Dorothy Red Slippers",
@@ -128,8 +130,8 @@ bookshelf = {
       "Frozen rain boots"
     ],
   },
-  bottom_right: = {
-    childrens_books = [
+  bottom_right: {
+    childrens_books: [
       "Peanut Butter and Cupcake",
       "The Giving Tree",
       "Alexander's Terrible, No Good, Very Bad Day",
@@ -147,4 +149,4 @@ bookshelf = {
       "Shel Silverstein Treasury"
     ],
   },
-},
+}
