@@ -16,6 +16,7 @@
 
 def alias(name)
   n = name
+  
   def vowel_swap(vowel)
     v_index = 0
     vowels = ['a','e','i','o','u']
@@ -30,8 +31,22 @@ def alias(name)
     }
     vowel
   end
-    
 
+  def con_swap(consonant)
+    c_index = 0
+    consonants = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s',
+      't','v','w','x','y','z']
+    consonants.each {|c|
+      if consonant == 'z'
+        consonant = 'b'
+      elsif c == consonant
+        consonant = consonants[c_index + 1]
+      else
+        c_index += 1
+      end
+    }
+    consonant
+  end
 
 
 
