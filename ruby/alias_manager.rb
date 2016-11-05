@@ -19,15 +19,17 @@ def alias_dispenser(name)
   def vowel_swap(vowel)
     v_index = 0
     vowels = ['a','e','i','o','u']
-    vowels.each {|i| 
-      if vowel == 'u'
-        vowel = 'a'
-      elsif i == vowel
+    vowels.each do |v| 
+      if v == vowel
+        if v == 'u'
+          vowel = 'a'
+        else
         vowel = vowels[v_index + 1]
+        end
       else
         v_index += 1
       end
-    }
+    end
     vowel
   end
 
@@ -35,15 +37,17 @@ def alias_dispenser(name)
     c_index = 0
     consonants = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s',
       't','v','w','x','y','z']
-    consonants.each {|c|
-      if consonant == 'z'
-        consonant = 'b'
-      elsif c == consonant
-        consonant = consonants[c_index + 1]
+    consonants.each do |c|
+      if c == consonant
+        if c == 'z'
+          consonant = 'b'
+        else
+          consonant = consonants[c_index + 1]
+        end
       else
         c_index += 1
       end
-    }
+    end 
     consonant
   end
 
