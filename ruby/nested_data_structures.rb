@@ -150,3 +150,13 @@ bookshelf = {
     ],
   },
 }
+
+
+puts "Some of my favorite things in the world are on this book shelf."
+puts "Some hobbies, some memories, some for fun, some have no emotional value at all."
+puts "But I think this bookshelf is an expression of my life in some ways."
+puts "For instance there are seven journals total of mine on this bookshelf."
+puts "#{bookshelf[:upper_left][:books][0]} #{bookshelf[:upper_left][:books][1]} 
+#{bookshelf[:upper_left][:books][2]} #{bookshelf[:upper_left][:books][5]}
+#{bookshelf[:top][:books][2]} #{bookshelf[:upper_left][:art_supplies][:drawing_journal]} 
+#{bookshelf[:mid_right][:books][1]}"
