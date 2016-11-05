@@ -1,25 +1,9 @@
-# swap first and last name
-# changing all the vowels to the next vowel and all the consonants to the
-# next consonant
-
-# write a method that takes the name as an argument 
-# at each index if the letter is a vowel it is equal to the 
-# next index at vowel index
-# write another method that does the same to consonants
-
-# in the end there should be three methods, one for vowels one for consonants
-# and then one that splits and joins the string
-
-# for edge cases use byteslice.delete or reverse.chop.reverse
-# be sure to downcase everything before you work on it and then when finished
-# it ought to get .capitalize
-
 def alias_dispenser(name)
-  
+
   def vowel_swap(vowel)
     v_index = 0
     vowels = ['a','e','i','o','u']
-    vowels.each do |v| 
+    vowels.each do |v|
       if v == vowel
         if v == 'u'
           vowel = 'a'
@@ -47,7 +31,7 @@ def alias_dispenser(name)
       else
         c_index += 1
       end
-    end 
+    end
     consonant
   end
 
@@ -78,7 +62,7 @@ alias_name = alias_dispenser(agent_name)
 names_and_aliases[agent_name] = alias_name
 
 until agent_name == "quit"
-  
+
   puts "Your new alias is #{alias_dispenser(agent_name)}."
   puts "If you want another alias, enter a new first and last name."
   puts "Otherwise, type 'quit'"
