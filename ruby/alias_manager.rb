@@ -14,8 +14,7 @@
 # be sure to downcase everything before you work on it and then when finished
 # it ought to get .capitalize
 
-def alias(name)
-  n = name
+def alias_dispenser(name)
   
   def vowel_swap(vowel)
     v_index = 0
@@ -48,12 +47,19 @@ def alias(name)
     consonant
   end
 
+  def capitalize(name_array)
+    num_names = name_array.length
+    
 
+  name_array = name.downcase.split('')
+  name_array.map!{|letter|
+      if (letter =~ /[^aeiou]/)
+        con_swap(letter)
+      elsif (letter =~ /[aeiou]/)
+        vowel_swap(letter)
+      end
+  }
+  name_array.join.split.capitalize.join
+end
 
-  n.downcase!.split('').each{|letter| 
-    n_index = 0
-    while name_index < n.length
-      if letter =~ /[^aeiou]
-
-
-      }
+print alias_dispenser("Felicia Torres")
