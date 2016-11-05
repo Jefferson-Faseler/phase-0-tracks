@@ -1,4 +1,4 @@
-def alias_dispenser(name)
+def alias_manager(name)
 
   def vowel_swap(vowel)
     v_index = 0
@@ -58,12 +58,12 @@ names_and_aliases = {}
 puts "Welcome, agent"
 puts "Enter your first and last name to recieve your alias."
 agent_name = gets.chomp
-alias_name = alias_dispenser(agent_name)
+alias_name = alias_manager(agent_name)
 names_and_aliases[agent_name] = alias_name
 
 until agent_name == "quit"
 
-  puts "Your new alias is #{alias_dispenser(agent_name)}."
+  puts "Your new alias is #{alias_manager(agent_name)}."
   puts "If you want another alias, enter a new first and last name."
   puts "Otherwise, type 'quit'"
   agent_name = gets.chomp
