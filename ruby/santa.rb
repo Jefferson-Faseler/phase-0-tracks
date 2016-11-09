@@ -1,7 +1,11 @@
 class Santa
   
+  attr_reader :age, :ethnicity, :reindeer_ranking
+  attr_accessor :age
+
   def initialize(gender, ethnicity)
     puts "Initializing Santa instance."
+    puts "This Santa is a #{gender} #{ethnicity}."
     @gender = gender
     @ethnicity = ethnicity
     @age = 0
@@ -15,24 +19,6 @@ class Santa
 
   def eat_milk_and_cookies(cookie_type)
     puts "That was a good #{cookie_type}!"
-  end
-
-  # Getter methods
-  def age
-    @age
-  end
-
-  def ethnicity
-    @ethnicity
-  end
-
-  def reindeer
-    @reindeer_ranking
-  end
-
-  # Setter methods
-  def celebrate_birthday
-    @age += 1
   end
 
   def get_mad_at(reindeer_name)
@@ -99,8 +85,13 @@ end
 
 ## ------------------------------------------------------------------
 
-
-
+num_of_santas = 1000
+santas = []
+example_genders = ["agender", "female", "bigender", "male", "female", "gender fluid", "N/A"]
+example_ethnicities = ["black", "Latino", "white", "Japanese-African", "prefer not to say", "Mystical Creature (unicorn)", "N/A"]
+num_of_santas.times do |i|
+  santas << Santa.new(example_genders.sample, example_ethnicities.sample)
+end
 
 
 
