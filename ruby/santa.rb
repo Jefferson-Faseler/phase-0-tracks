@@ -1,5 +1,7 @@
 class Santa
   
+  attr_reader age: ethnicity: reindeer_ranking:
+
   def initialize(gender, ethnicity)
     puts "Initializing Santa instance."
     @gender = gender
@@ -16,20 +18,7 @@ class Santa
   def eat_milk_and_cookies(cookie_type)
     puts "That was a good #{cookie_type}!"
   end
-
-  # Getter methods
-  def age
-    @age
-  end
-
-  def ethnicity
-    @ethnicity
-  end
-
-  def reindeer
-    @reindeer_ranking
-  end
-
+ 
   # Setter methods
   def celebrate_birthday
     @age += 1
