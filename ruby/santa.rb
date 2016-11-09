@@ -1,6 +1,7 @@
 class Santa
   
   attr_reader age: ethnicity: reindeer_ranking:
+  attr_accessor age:
 
   def initialize(gender, ethnicity)
     puts "Initializing Santa instance."
@@ -17,11 +18,6 @@ class Santa
 
   def eat_milk_and_cookies(cookie_type)
     puts "That was a good #{cookie_type}!"
-  end
- 
-  # Setter methods
-  def celebrate_birthday
-    @age += 1
   end
 
   def get_mad_at(reindeer_name)
