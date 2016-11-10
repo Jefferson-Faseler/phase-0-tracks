@@ -25,7 +25,12 @@ let(:hangman) { Hangman.new('abc') }
     expect(hangman.compare(['a','b','c'])).to include('b')
   end
 
+  it "morphs array into '_'" do
+    expect(hangman.morph_array(['a','b','c'])).to contain_exactly('_','_','_')
+  end
+
   it "displays letter in word if guessed correctly" do
+  #  expect(hangman.display('b')).to include('_ b _')
   end
 
   it "adds strike to maximum strike count" do

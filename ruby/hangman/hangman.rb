@@ -8,11 +8,16 @@ class Hangman
   def compare(letter)
     @word.each do |i|
       if i == letter
-        true
+        @guessed_letter = true
       else 
-        false
+        @guessed_letter = false
       end
     end
+  end
+
+  def morph_array(word_arr)
+    @morph = word_arr
+    @morph.map! {|i| '_'}
   end
 
 end
