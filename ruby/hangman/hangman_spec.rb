@@ -19,7 +19,10 @@
 require_relative 'hangman'
 
 describe Hangman do
+let(:hangman) { Hangman.new('abc') }
+
   it "compares letter to word" do
+    expect(hangman.compare(['a','b','c'])).to include('b')
   end
 
   it "displays letter in word if guessed correctly" do
