@@ -34,7 +34,7 @@ let(:hangman) { Hangman.new }
   end
 
   it "morphs array into '_'" do
-   # expect(hangman.morph_array(['a','b','c'])).to contain_exactly('_','_','_')
+    expect(hangman.morph_arr(['a','b','c'])).to contain_exactly('_','_','_')
   end
 
   it "displays letter in word if guessed correctly" do

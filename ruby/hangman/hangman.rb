@@ -3,8 +3,6 @@ class Hangman
   def word_to_arr(word)
     @word = word
     @word_arr = word.split('')
-    # word_len = word.length
-    # @morphed = Array.new(word_len, '_')
   end
 
   def letter_guess(letter)
@@ -20,9 +18,9 @@ class Hangman
     @letter_index
   end
 
-  # def morph_array(word_arr)
-  #   @morphed = word_arr.map {|i| '_'}
-  # end
+  def morph_arr(word_arr)
+    @morphed = word_arr.map {|i| '_'}
+  end
  
   # def display(letter, letter_index)
   #   morph_array(@word_arr)
