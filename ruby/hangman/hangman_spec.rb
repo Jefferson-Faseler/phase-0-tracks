@@ -38,7 +38,7 @@ let(:hangman) { Hangman.new }
   end
 
   it "displays letter in word if guessed correctly" do
-   # expect(hangman.display('b', 1)).to contain_exactly('_ b _')
+    expect(hangman.display('b', 1)).to contain_exactly('_ b _')
   end
 
   it "adds strike to maximum strike count" do
