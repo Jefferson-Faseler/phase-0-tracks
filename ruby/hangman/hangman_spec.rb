@@ -22,8 +22,11 @@ describe Hangman do
 let(:hangman) { Hangman.new('abc') }
 
   it "creates array of word" do
-    expect(hangman.word_to_arr('abc')).to match(['a','b','c'])
+    expect(hangman.word_to_arr('abc')).to match_array(['a','b','c'])
   end
+
+  # it "recieves letter" do
+  #   expect(hangman.letter_guess = 'b').to 
 
   it "compares letter to word" do
     #expect(hangman.compare(['a','b','c'],'b')).to include('b')
