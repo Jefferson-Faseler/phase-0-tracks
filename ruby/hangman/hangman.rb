@@ -1,9 +1,5 @@
 class Hangman
   
-  def initialize
-    puts "Initialize"
-  end
-
   def word_to_arr(word)
     @word = word
     @word_arr = word.split('')
@@ -15,15 +11,14 @@ class Hangman
     @letter = letter
   end
 
-  # def compare(word_arr, letter)
-  #   @word_arr = word_arr
-  #   if @word_arr.include?(letter)
-  #     @letter_index = word_arr.find_index(letter)
-  #   else
-  #     false
-  #   end
-  #   @letter_index
-  # end
+  def compare(word_arr, letter)
+    if word_arr.include?(letter)
+      @letter_index = word_arr.find_index(letter)
+    else
+      false
+    end
+    @letter_index
+  end
 
   # def morph_array(word_arr)
   #   @morphed = word_arr.map {|i| '_'}

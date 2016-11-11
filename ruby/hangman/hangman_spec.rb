@@ -30,7 +30,7 @@ let(:hangman) { Hangman.new }
   end 
 
   it "compares letter to word" do
-    #expect(hangman.compare(['a','b','c'],'b')).to include('b')
+    expect(hangman.compare(['a','b','c'],'b')).to eq(1)
   end
 
   it "morphs array into '_'" do
