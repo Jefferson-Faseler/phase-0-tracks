@@ -22,7 +22,7 @@ describe Hangman do
 let(:hangman) { Hangman.new('abc') }
 
   it "compares letter to word" do
-    expect(hangman.compare(['a','b','c'])).to include('b')
+    expect(hangman.compare('b')).to include('b')
   end
 
   it "morphs array into '_'" do
@@ -30,7 +30,7 @@ let(:hangman) { Hangman.new('abc') }
   end
 
   it "displays letter in word if guessed correctly" do
-  #  expect(hangman.display('b')).to include('_ b _')
+    expect(hangman.display('b', 1)).to contain_exactly('_ b _')
   end
 
   it "adds strike to maximum strike count" do
