@@ -69,12 +69,12 @@ describe Hangman do
 let(:hangman) { Hangman.new('abcde') }
 
   it "allows user to enter word" do
-    expect(hangman.word).to eq 'abc'
+    expect(hangman.word).to eq 'abcde'
   end
 
   it "transforms string to hash with default values false" do
-    expect(hangman.word_to_hash).to 
-    eq(a: false, b: false, c: false, d: false, e: false)
+    expect(hangman.word_to_hash).to eq("a"=>false, "b"=>false, 
+      "c"=>false, "d"=>false, "e"=>false)
   end
 
   it "creates number of guesses based on length and uniqe chars" do
