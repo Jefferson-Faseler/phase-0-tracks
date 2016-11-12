@@ -37,11 +37,11 @@ class Hangman
   end
 
   def compare(letter)
-    @word_hash.each do |key, value|
-      if key == letter
-      @word_hash[key] = true
-      else
-        puts "That letter is not in the word."
+    if @word_hash.include?(letter)
+      @word_hash.each do |key, value|
+        if key == letter
+        @word_hash[key] = true
+        end
       end
     end
     @word_hash
