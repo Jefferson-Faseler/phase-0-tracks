@@ -67,24 +67,29 @@ require_relative 'hangman'
 
 describe Hangman do
 let(:hangman) { Hangman.new('abcde') }
+let(:hangman_apple) { Hangman.new('apple') }
 
   it "allows user to enter word" do
     expect(hangman.word).to eq 'abcde'
+    expect(hangman_apple.word).to eq 'apple'
   end
 
   it "transforms string to hash with default values false" do
     expect(hangman.word_to_hash).to eq("a"=>false, "b"=>false, 
       "c"=>false, "d"=>false, "e"=>false)
+    expect(hangman_apple.word_to_hash).to eq("a"=>false, "p"=>false,
+      "p"=>false, "l"=>false, "e"=>false)
   end
 
   it "creates number of guesses based on length and uniqe chars" do
     expect(hangman.guess_counter(['a','b','c','d','e'])).to eq 9
+    expect(hangman_apple.guess_counter(['a','p','p','l','e'])).to eq 8
   end
 
   it "user enters letter and compares letter to array of guessed letters" do
-    hangman_double = Hangman.new('abc')
-    expect(hangman_double.guess_letter('c')).to eq [['c'], -1]
-    expect(hangman_double.guess_letter('c')).to eq [['c'], -1]
+    expect(hangman.guess_letter('c')).to eq [['c'], -1]
+    expect(hangman.guess_letter('c')).to eq [['c'], -1]
+    expect(hangman.guess_letter('a')).to eq [['c','a'], -2]
   end
 
   it "compares letter to hash of word letters" do
