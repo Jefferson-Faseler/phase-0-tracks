@@ -82,6 +82,7 @@ let(:hangman) { Hangman.new('abcde') }
   end
 
   it "user enters letter" do
+    expect(hangman.letter_guess=('c')).to eq 'c'
   end
 
   it "compares letter to hash of guessed letters" do

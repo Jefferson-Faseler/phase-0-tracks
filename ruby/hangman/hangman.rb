@@ -20,6 +20,10 @@ class Hangman
     @guess_count = length + chars.to_i
   end
 
+  def letter_guess=(letter)
+    @letter_guess = letter
+  end
+
   def word
     @word
   end
