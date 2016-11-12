@@ -6,14 +6,6 @@ class Hangman
     @guess_arr = []
   end
 
-  def guess_hash
-    alpha_array = ('a'..'z').to_a
-    alpha_array.each do |letter|
-      @guess_hash[letter] = false
-    end
-    @guess_hash
-  end
-
   def word_to_hash
     w_arr = @word.split('')
       guess_counter(w_arr)
@@ -32,9 +24,10 @@ class Hangman
   def guess_letter(letter)
     @letter_guess = letter
     if @guess_arr.include?(letter)
+      puts "You have guessed that letter already"
       puts @guess_count
     else 
-      @guess_arr << @letter_guess
+      @guess_arr << letter
       @guess_count -= 1
       puts @guess_count
     end

@@ -81,8 +81,10 @@ let(:hangman) { Hangman.new('abcde') }
     expect(hangman.guess_counter(['a','b','c','d','e'])).to eq 9
   end
 
-  it "user enters letter and compares letter to hash of guessed letters" do
-    expect(hangman.guess_letter('c')).to eq [['c'], -1]
+  it "user enters letter and compares letter to array of guessed letters" do
+    hangman_double = Hangman.new('abc')
+    expect(hangman_double.guess_letter('c')).to eq [['c'], -1]
+    expect(hangman_double.guess_letter('c')).to eq [['c'], -1]
   end
 
   it "compares letter to hash of word letters" do
