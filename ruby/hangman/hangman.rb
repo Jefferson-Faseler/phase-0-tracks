@@ -15,8 +15,8 @@ class Hangman
   end
 
   def guess_counter(w_arr)
-    length = w_arr.length
-    chars = w_arr.uniq.length
+    length = w_arr.length / 2
+    chars = w_arr.uniq.length * 1.5
     @guess_count = length + chars
   end
 
