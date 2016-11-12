@@ -45,7 +45,7 @@
 # compare the guessed letter to the word
 # steps: 
 #   compare letter to each letter in word-hash
-#   if letter is equal to index change value to true
+#   if letter is equal to key change value to true
 # output: return word hash with updated values
 
 # display a printed version of the 
@@ -87,12 +87,15 @@ let(:hangman_apple) { Hangman.new('apple') }
   end
 
   it "user enters letter and compares letter to array of guessed letters" do
-    expect(hangman.guess_letter('c')).to eq [['c'], -1]
-    expect(hangman.guess_letter('c')).to eq [['c'], -1]
-    expect(hangman.guess_letter('a')).to eq [['c','a'], -2]
+    expect(hangman.guess_letter('c')).to eq [['a','b','c','d','e'], 9]
+    expect(hangman.guess_letter('c')).to eq [['a','b','c','d','e'], 9]
+    expect(hangman.guess_letter('a')).to eq [['a','b','c','d','e'], 9]
+    expect(hangman.guess_letter('z')).to eq [['a','b','c','d','e','z'], 8]
   end
 
   it "compares letter to hash of word letters" do
+    expect(hangman.compare('c')).to eq("a"=>false, "b"=>false, 
+      "c"=>true, "d"=>false, "e"=>false)
   end
 
   it "display word with underscores as unguessed characters" do

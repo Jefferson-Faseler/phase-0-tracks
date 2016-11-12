@@ -4,12 +4,14 @@ class Hangman
     @word_hash = {}
     @guess_count = 0
     @guess_arr = []
+    w_arr = word.split('')
+    @guess_arr = w_arr
+    guess_counter(w_arr)
+    word_to_hash
   end
 
   def word_to_hash
-    w_arr = @word.split('')
-      guess_counter(w_arr)
-    w_arr.each do |letter|
+    @guess_arr.each do |letter|
       @word_hash[letter] = false
     end
     @word_hash
@@ -25,13 +27,24 @@ class Hangman
     @letter_guess = letter
     if @guess_arr.include?(letter)
       puts "You have guessed that letter already"
-      puts @guess_count
     else 
       @guess_arr << letter
       @guess_count -= 1
       puts @guess_count
+      compare(letter)
     end
     return @guess_arr, @guess_count
+  end
+
+  def compare(letter)
+    @word_hash.each do |key, value|
+      if key == letter
+      @word_hash[key] = true
+      else
+        puts "That letter is not in the word."
+      end
+    end
+    @word_hash
   end
 
   def word
