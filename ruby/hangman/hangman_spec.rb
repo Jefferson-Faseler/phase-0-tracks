@@ -67,7 +67,7 @@ require_relative 'hangman'
 
 describe Hangman do
 let(:hangman) { Hangman.new('abcde') }
-let(:hangman_apple) { Hangman.new('apple') }
+let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
 
   it "allows user to enter word" do
     expect(hangman.word).to eq 'abcde'
@@ -99,6 +99,13 @@ let(:hangman_apple) { Hangman.new('apple') }
   end
 
   it "display word with underscores as unguessed characters" do
+    expect(hangman.w_board).to eq '_ _ _ _ _'
+    expect(hangman.compare('c')).to eq("a"=>false, "b"=>false, 
+      "c"=>true, "d"=>false, "e"=>false)
+      expect(hangman.w_display).to eq '_ _ c _ _'
+      expect(hangman.compare('e')).to eq("a"=>false, "b"=>false, 
+      "c"=>true, "d"=>false, "e"=>true)
+      expect(hangman.w_display).to eq '_ _ c _ e'
   end
 
   it "displays win/lose message" do

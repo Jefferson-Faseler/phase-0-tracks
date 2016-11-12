@@ -5,9 +5,12 @@ class Hangman
     @guess_count = 0
     @guess_arr = []
     w_arr = word.split('')
+    @w_arr = w_arr
     @guess_arr = w_arr
+    @w_board = w_arr.map {|letter| '_'}
     guess_counter(w_arr)
     word_to_hash
+    @array_of_true
   end
 
   def word_to_hash
@@ -26,11 +29,9 @@ class Hangman
   def guess_letter(letter)
     @letter_guess = letter
     if @guess_arr.include?(letter)
-      puts "You have guessed that letter already"
     else 
       @guess_arr << letter
       @guess_count -= 1
-      puts @guess_count
       compare(letter)
     end
     return @guess_arr, @guess_count
@@ -47,11 +48,36 @@ class Hangman
     @word_hash
   end
 
+  def w_display
+    @array_of_true = []
+    if @word_hash.has_value?(true)
+      @word_hash.each_pair do |letter, bool|
+        @array_of_true << letter if bool == true
+      end
+    end
+    intersection = @w_arr & @array_of_true
+    intersection.each do |letter|
+      w_index = @w_arr.find_index(letter)
+      @w_board.delete_at(w_index)
+      @w_board.insert((w_index), letter)
+    end
+    @display = @w_board.join(' ')
+    p @display
+  end
+
   def word
     @word
+  end
+
+  def w_display
+    @w_display
   end
 
   def guess_count
     @guess_count
   end
 end
+
+h = Hangman.new('abcde')
+h.compare('c')
+h.w_display
