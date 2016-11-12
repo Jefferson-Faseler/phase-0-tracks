@@ -78,6 +78,7 @@ let(:hangman) { Hangman.new('abcde') }
   end
 
   it "creates number of guesses based on length and uniqe chars" do
+    expect(hangman.guess_counter(['a','b','c','d','e'])).to eq 10
   end
 
   it "user enters letter" do
