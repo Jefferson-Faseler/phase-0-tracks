@@ -14,18 +14,18 @@
 #   pass in word as argument upon initialization
 # output: return word
 
+# transform word into list with values
+# steps: 
+#   split string into hash with letters as keys
+#   set default values as false to indicate not guessed
+# output: return word hash
+
 # method to create num of guesses
 # determined by length of word
 # steps:
 #   length of word is worth 1/2 a guess per char and each unique
 #   character is worth 1.5 a guess
 # output: guess count to be given at intialization
-
-# transform word into list with values
-# steps: 
-#   split string into hash with letters as keys
-#   set default values as false to indicate not guessed
-# output: return word hash
 
 # another user to enter letters for guess
 # input letter as argument
@@ -66,16 +66,18 @@
 require_relative 'hangman'
 
 describe Hangman do
-let(:hangman) { Hangman.new('abc') }
+let(:hangman) { Hangman.new('abcde') }
 
   it "allows user to enter word" do
     expect(hangman.word).to eq 'abc'
   end
 
-  it "creates number of guesses based on length and uniqe chars" do
+  it "transforms string to hash with default values false" do
+    expect(hangman.word_to_hash).to 
+    eq(a: false, b: false, c: false, d: false, e: false)
   end
 
-  it "transforms string to hash with default values false" do
+  it "creates number of guesses based on length and uniqe chars" do
   end
 
   it "user enters letter" do

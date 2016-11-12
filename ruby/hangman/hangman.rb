@@ -6,5 +6,5 @@ class Hangman
   def word
     @word
   end
-  
+
 end
