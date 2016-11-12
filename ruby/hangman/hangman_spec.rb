@@ -27,13 +27,13 @@
 #   character is worth 1.5 a guess
 # output: guess count to be given at intialization
 
+## combined these methods during rspec testing for efficiency
 # another user to enter letters for guess
 # input letter as argument
 # steps: 
-#   compare to guess-hash
+#   compare to guess-arr
 # output: return comparison
-
-# compare guessed letter to guess-hash
+# compare guessed letter to guess-arr
 # input instance variable
 # steps: 
 #   compare letter to each letter in guess-hash
@@ -81,11 +81,8 @@ let(:hangman) { Hangman.new('abcde') }
     expect(hangman.guess_counter(['a','b','c','d','e'])).to eq 9
   end
 
-  it "user enters letter" do
-    expect(hangman.letter_guess=('c')).to eq 'c'
-  end
-
-  it "compares letter to hash of guessed letters" do
+  it "user enters letter and compares letter to hash of guessed letters" do
+    expect(hangman.guess_letter('c')).to eq [['c'], -1]
   end
 
   it "compares letter to hash of word letters" do

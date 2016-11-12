@@ -3,6 +3,15 @@ class Hangman
     @word = word
     @word_hash = {}
     @guess_count = 0
+    @guess_arr = []
+  end
+
+  def guess_hash
+    alpha_array = ('a'..'z').to_a
+    alpha_array.each do |letter|
+      @guess_hash[letter] = false
+    end
+    @guess_hash
   end
 
   def word_to_hash
@@ -19,9 +28,17 @@ class Hangman
     chars = w_arr.uniq.length * 1.5
     @guess_count = length + chars.to_i
   end
-
-  def letter_guess=(letter)
+  
+  def guess_letter(letter)
     @letter_guess = letter
+    if @guess_arr.include?(letter)
+      puts @guess_count
+    else 
+      @guess_arr << @letter_guess
+      @guess_count -= 1
+      puts @guess_count
+    end
+    return @guess_arr, @guess_count
   end
 
   def word
@@ -31,5 +48,4 @@ class Hangman
   def guess_count
     @guess_count
   end
-
 end
