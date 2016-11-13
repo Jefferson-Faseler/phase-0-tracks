@@ -74,13 +74,6 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
     expect(hangman_apple.word).to eq 'apple'
   end
 
-  it "transforms string to hash with default values false" do
-    expect(hangman.word_to_hash).to eq("a"=>false, "b"=>false, 
-      "c"=>false, "d"=>false, "e"=>false)
-    expect(hangman_apple.word_to_hash).to eq("a"=>false, "p"=>false,
-      "p"=>false, "l"=>false, "e"=>false)
-  end
-
   it "creates number of guesses based on length and uniqe chars" do
     expect(hangman.guess_counter(['a','b','c','d','e'])).to eq 9
     expect(hangman_apple.guess_counter(['a','p','p','l','e'])).to eq 8
@@ -93,24 +86,25 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
     expect(hangman.guess_letter('z')).to eq [['a','b','c','d','e','z'], 8]
   end
 
-  it "compares letter to hash of word letters" do
-    expect(hangman.compare('c')).to eq("a"=>false, "b"=>false, 
-      "c"=>true, "d"=>false, "e"=>false)
+  it "compares letter to array of word letters" do
+    temp = Hangman.new('abcde')
+    expect(temp.update).to eq(['_','_','_','_','_'])
+    temp.guess_letter('c')
+    expect(temp.update).to eq(['_','_','c','_','_'])
   end
 
-  it "display word with underscores as unguessed characters" do
-    expect(hangman.w_board).to eq '_ _ _ _ _'
-    expect(hangman.compare('c')).to eq("a"=>false, "b"=>false, 
-      "c"=>true, "d"=>false, "e"=>false)
-      expect(hangman.w_display).to eq '_ _ c _ _'
-      expect(hangman.compare('e')).to eq("a"=>false, "b"=>false, 
-      "c"=>true, "d"=>false, "e"=>true)
-      expect(hangman.w_display).to eq '_ _ c _ e'
+  it "display word as string with underscores for unguessed characters" do
+    expect(hangman.update_word('z')).to eq('_ _ _ _ _')
+    expect(hangman.update_word('c')).to eq('_ _ c _ _')
   end
 
-  it "displays win/lose message" do
-    expect(hangman.win_message).to output('Good job! You did the impossible!').to_stdout
-    expect(hangman.lose_message).to output('Do you even lift?').to_stdout
+  it "display updated string with current guess count" do
+    temp = Hangman.new('abcde')
+    temp.update_word('z')
+    temp.update_word('c')
+    expect(temp.display_status). to eq ['_ _ c _ _', 9]
+    temp.update_word('e')   
+    expect(hangman.display_status).to eq(['_ _ c _ e', 9])
   end
 
 end
