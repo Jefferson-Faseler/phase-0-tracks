@@ -36,6 +36,7 @@ class Hangman
       end
     end
     @updated_string = @update.join(' ')
+    @updated_string
     # display_status
   end
 

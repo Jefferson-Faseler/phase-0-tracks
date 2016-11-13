@@ -103,8 +103,9 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
     temp.update_word('z')
     temp.update_word('c')
     expect(temp.display_status). to eq ['_ _ c _ _', 9]
+
     temp.update_word('e')   
-    expect(hangman.display_status).to eq(['_ _ c _ e', 9])
+    expect(temp.display_status).to eq(['_ _ c _ e', 9])
   end
 
 end
