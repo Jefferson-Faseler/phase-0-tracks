@@ -106,6 +106,12 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
 
     temp.update_word('e')   
     expect(temp.display_status).to eq(['_ _ c _ e', 9])
+
+    hangman_apple.update_word('p')
+    expect(hangman_apple.display_status).to eq(['_ p p _ _', 8])
   end
 
+  # it "output text for win or lose" do
+  #   temp = Hangman.new
+  # end
 end

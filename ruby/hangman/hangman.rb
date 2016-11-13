@@ -1,4 +1,6 @@
 class Hangman
+  attr_reader :word, :update, :updated_string, :guess_count
+
   def initialize(word)
     @word = word.downcase.strip
     @guess_count = 0
@@ -21,8 +23,8 @@ class Hangman
       @guess_arr << letter
       @guess_count -= 1
     end
+    guess_to_display(letter)
     return @guess_arr, @guess_count
-    # guess_to_display(letter)
   end
 
   def guess_to_display(letter)
@@ -36,8 +38,8 @@ class Hangman
       end
     end
     @updated_string = @update.join(' ')
+    display_status
     @updated_string
-    # display_status
   end
 
   def display_status
@@ -51,21 +53,5 @@ class Hangman
     puts message
     puts @updated_string
     return @updated_string, @guess_count
-  end
-
-  def word
-    @word
-  end
-
-  def update
-    @update
-  end
-
-  def updated_string
-    @updated_string
-  end
-
-  def guess_count
-    @guess_count
   end
 end
