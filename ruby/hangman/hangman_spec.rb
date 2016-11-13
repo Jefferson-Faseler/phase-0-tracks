@@ -111,7 +111,17 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
     expect(hangman_apple.display_status).to eq(['_ p p _ _', 8])
   end
 
-  # it "output text for win or lose" do
-  #   temp = Hangman.new
-  # end
+  it "output text for win or lose" do
+    temp = Hangman.new('abc')
+    temp.guess_letter('d')
+    temp.guess_letter('e')
+    temp.guess_letter('f')
+    temp.guess_letter('g')
+    temp.guess_letter('h')
+    expect(temp.display_status).to output('Do you even lift?')
+  end
 end
+
+
+
+

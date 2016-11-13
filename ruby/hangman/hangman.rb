@@ -37,9 +37,17 @@ class Hangman
         @update[letter_index] = letter
       end
     end
+    cleaner
     @updated_string = @update.join(' ')
     display_status
     @updated_string
+  end
+
+  def cleaner
+    if @update.length > @word.length
+      @update.pop
+    end
+    @update
   end
 
   def display_status
