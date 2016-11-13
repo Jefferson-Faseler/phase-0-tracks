@@ -109,6 +109,8 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
   end
 
   it "displays win/lose message" do
+    expect(hangman.win_message).to output('Good job! You did the impossible!').to_stdout
+    expect(hangman.lose_message).to output('Do you even lift?').to_stdout
   end
 
 end

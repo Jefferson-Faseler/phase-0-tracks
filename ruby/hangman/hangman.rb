@@ -62,15 +62,28 @@ class Hangman
       @w_board.insert((w_index), letter)
     end
     @display = @w_board.join(' ')
-    p @display
+    @display
   end
+
+  def win_message
+    if @w_board.include?('_') == false
+      puts 'Good job! You did the impossible!'
+    end
+  end
+
+  def lose_message
+    if @guess_count <= 0
+      puts 'Do you even lift?'
+    end
+  end
+
 
   def word
     @word
   end
 
-  def w_display
-    @w_display
+  def w_board
+    @w_board.join(' ')
   end
 
   def guess_count
