@@ -112,13 +112,13 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
   end
 
   it "output text for win or lose" do
-    temp = Hangman.new('abc')
-    temp.guess_letter('d')
-    temp.guess_letter('e')
-    temp.guess_letter('f')
-    temp.guess_letter('g')
-    temp.guess_letter('h')
-    expect(temp.display_status).to output('Do you even lift?')
+    temp = Hangman.new('abc') # 5 guesses
+    temp.guess_letter('d')    # 4
+    temp.guess_letter('e')    # 3
+    temp.guess_letter('f')    # 2
+    temp.guess_letter('g')    # 1
+    temp.guess_letter('h')    # lose
+    expect(temp.display_status).to eq(['_ _ _', 0])
   end
 end
 

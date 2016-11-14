@@ -17,7 +17,10 @@ class Hangman
   
   def guess_letter(letter)
     @letter_guess = letter
-    if @guess_arr.include?(letter)
+    if @letter_guess == @word
+      @update = @word
+      display_status
+    elsif @guess_arr.include?(letter)
       update_word(letter)
     else 
       @guess_arr << letter
@@ -44,7 +47,7 @@ class Hangman
   end
 
   def cleaner
-    if @update.length > @word.length
+    while @update.length > @word.length
       @update.pop
     end
     @update
