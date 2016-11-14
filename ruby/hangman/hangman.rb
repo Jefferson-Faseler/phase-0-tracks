@@ -38,6 +38,10 @@ class Hangman
     display_status
   end
 
+  # I tried not to use this patch, but there was not a way around 
+  # it I could find. The output display would add incorrect guesses 
+  # to the end of the underscores.
+  # (some five letter word would become ==> '_ _ _ _ _ <incorrect letter>'
   def monkey_patch
     while @update.length > @word.length
       @update.pop

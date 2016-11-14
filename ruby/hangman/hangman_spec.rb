@@ -14,11 +14,11 @@
 #   pass in word as argument upon initialization
 # output: return word
 
-# transform word into list with values
+# transform word into list
 # steps: 
-#   split string into hash with letters as keys
-#   set default values as false to indicate not guessed
-# output: return word hash
+#   split string into array for comparison and another 
+#   array for comparing previously guessed letters
+# output: initialization.
 
 # method to create num of guesses
 # determined by length of word
@@ -27,40 +27,33 @@
 #   character is worth 1.5 a guess
 # output: guess count to be given at intialization
 
-## combined these methods during rspec testing for efficiency
 # another user to enter letters for guess
 # input letter as argument
 # steps: 
-#   compare to guess-arr
+#   compare to guess-arr with include? method
+#   if user guesses the entire word at once end the game. 
 # output: return comparison
-# compare guessed letter to guess-arr
-# input instance variable
-# steps: 
-#   compare letter to each letter in guess-hash
-#   if letter is equal to index change value to true
-#     if already true do not update guess count
-#     else update guess count
-# output: updated guess hash values and guess counter
 
 # compare the guessed letter to the word
 # steps: 
-#   compare letter to each letter in word-hash
-#   if letter is equal to key change value to true
-# output: return word hash with updated values
+#   compare letter to each letter in word_array
+#   if letter is equal to index change the display_array
+#   at the matching index to the letter.
+# output: return an array with updated letters
 
 # display a printed version of the 
 # correctly guessed letters with underscores 
 # for letters that still need to be discovered
 # steps: 
-#   Print hash symbols for all values in word-hash that 
-#   evaluate to true. 
-#   If they evaluate to false print an underscore
-# output: print hash symbols of word hash if value is true
+#   join the array with guessed letters and underscores into 
+#   variable to display for the user.
+# output: print string of letters and underscores
 
-# method to return a message for win or lose
+# method to return a message for game status
 # steps:
 #   if win "Good job"
-#   else "Go back to school, bro."
+#   if lose "Not good job"
+#   continuously update with guesses remaining and updates string
 # output: printed message
 
 require_relative 'hangman'
