@@ -35,7 +35,7 @@ class Hangman
     elsif @updated_string != @update.join(' ')
       update_word(letter)
     end
-    display_status
+    return display_status, update_word(letter)
   end
 
   # I tried not to use this patch, but there was not a way around 
@@ -73,3 +73,20 @@ class Hangman
     return @updated_string, @guess_count
   end
 end
+
+player_guess = nil
+puts "Let's play hangman!"
+puts "Enter the word for your opponent to guess."
+puts "Don't look player 2!"
+player_word = gets.chomp
+puts "The word has been chosen!"
+puts "Enter your guess by letter or by the entire word! (type 'DONE' to quit)."
+game_word = Hangman.new(player_word)
+# users have to hit enter twice in order for the display to correctly 
+# update. Looking for fix.
+until player_guess == 'DONE'
+  game_word.guess_letter(player_guess)
+  player_guess = gets.chomp
+end
+puts "The word was #{game_word.word}!"
+puts "Hope you had fun!"
