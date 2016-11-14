@@ -17,21 +17,32 @@ class Hangman
   
   def guess_letter(letter)
     @letter_guess = letter
-    if @letter_guess == @word
-      @update = @word
-      display_status
+    if letter == @word
+      @updated_string = letter
     elsif @guess_arr.include?(letter)
-      update_word(letter)
+      @guess_arr
     else 
       @guess_arr << letter
       @guess_count -= 1
     end
-    guess_to_display(letter)
-    return @guess_arr, @guess_count
+    guess_to_update(letter)
+    return @guess_arr
   end
 
-  def guess_to_display(letter)
-    update_word(letter)
+  def guess_to_update(letter)
+    if letter == @word
+      @word 
+    elsif @updated_string != @update.join(' ')
+      update_word(letter)
+    end
+    display_status
+  end
+
+  def monkey_patch
+    while @update.length > @word.length
+      @update.pop
+    end
+    @update
   end
 
   def update_word(letter)
@@ -40,17 +51,9 @@ class Hangman
         @update[letter_index] = letter
       end
     end
-    cleaner
+    monkey_patch
     @updated_string = @update.join(' ')
-    display_status
     @updated_string
-  end
-
-  def cleaner
-    while @update.length > @word.length
-      @update.pop
-    end
-    @update
   end
 
   def display_status
