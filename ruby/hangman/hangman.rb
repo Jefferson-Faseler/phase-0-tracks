@@ -14,14 +14,14 @@ class Hangman
     chars = word_array.uniq.length * 1.5
     @guess_count = length + chars.to_i
   end
-  
+
   def guess_letter(letter)
     @letter_guess = letter
     if letter == @word
       word_guess
     elsif @guess_arr.include?(letter)
       @letter_guess
-    else 
+    else
       @guess_arr << letter
       @guess_count -= 1
     end
@@ -30,7 +30,7 @@ class Hangman
   end
 
   def guess_to_update(letter)
-    if @win == true 
+    if @win == true
       display_status
     else
     update_word(letter)
