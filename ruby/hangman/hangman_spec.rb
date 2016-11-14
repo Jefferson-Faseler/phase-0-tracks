@@ -92,8 +92,8 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
   end
 
   it "display word as string with underscores for unguessed characters" do
-    expect(hangman.update_word('z')).to eq('_ _ _ _ _')
-    expect(hangman.update_word('c')).to eq('_ _ c _ _')
+    expect(hangman.update_word('z')).to eq(['_ _ _ _ _', 9])
+    expect(hangman.update_word('c')).to eq(['_ _ c _ _', 9])
   end
 
   it "display updated string with current guess count" do
@@ -119,7 +119,3 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
     expect(temp.display_status).to eq(['_ _ _', 0])
   end
 end
-
-
-
-
