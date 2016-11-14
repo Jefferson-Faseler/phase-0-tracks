@@ -101,18 +101,18 @@ end
 # end
 
 
-# player_guess = nil
-# puts "Let's play hangman!"
-# puts "Enter the word for your opponent to guess."
-# puts "Don't look player 2!"
-# player_word = gets.chomp
-# puts "The word has been chosen!"
-# puts "Enter your guess by letter or by the entire word! (type 'DONE' to quit)."
-# game_word = Hangman.new(player_word)
+player_guess = nil
+puts "Let's play hangman!"
+puts "Enter the word for your opponent to guess."
+puts "Don't look player 2!"
+player_word = gets.chomp
+puts "The word has been chosen!"
+puts "Enter your guess by letter or by the entire word! (type 'DONE' to quit)."
+game_word = Hangman.new(player_word)
 
-# until player_guess == 'DONE'
-#   game_word.guess_letter(player_guess)
-#   player_guess = gets.chomp
-# end
-# puts "The word was #{game_word.word}!"
-# puts "Hope you had fun!"
+until player_guess == 'DONE'
+  game_word.guess_letter(player_guess)
+  player_guess = gets.chomp
+end
+puts "The word was #{game_word.word}!"
+puts "Hope you had fun!"
