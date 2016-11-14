@@ -84,13 +84,18 @@ let(:hangman_apple) { Hangman.new('apple') } #to demonstrate opposing result
     expect(hangman.guess_letter('c')).to eq [['a','b','c','d','e'], 9]
     expect(hangman.guess_letter('a')).to eq [['a','b','c','d','e'], 9]
     expect(hangman.guess_letter('z')).to eq [['a','b','c','d','e','z'], 8]
+
+
   end
 
   it "compares letter to array of word letters" do
-    temp = Hangman.new('abcde')
-    expect(temp.update).to eq(['_','_','_','_','_'])
-    temp.guess_letter('c')
-    expect(temp.update).to eq(['_','_','c','_','_'])
+    expect(hangman.update).to eq(['_','_','_','_','_'])
+    hangman.guess_letter('c')
+    expect(hangman.update).to eq(['_','_','c','_','_'])
+
+    expect(hangman_apple.update).to eq(['_','_','_','_','_'])
+    hangman_apple.guess_letter('p')
+    expect(hangman_apple.update).to eq(['_','p','p','_','_'])
   end
 
   it "display word as string with underscores for unguessed characters" do
