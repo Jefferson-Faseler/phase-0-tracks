@@ -19,9 +19,7 @@ class Hangman
     @letter_guess = letter
     if letter == @word
       word_guess
-    elsif @guess_arr.include?(letter)
-      @letter_guess
-    else
+    elsif !@guess_arr.include?(letter)
       @guess_arr << letter
       @guess_count -= 1
     end
