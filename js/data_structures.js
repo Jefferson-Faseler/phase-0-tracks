@@ -33,3 +33,17 @@ if (horseColors.length === horseNames.length) {
 } else {
   console.log('The arrays are not the same length');
 }
+
+// make a car constructor 
+// create a constructor function for cars
+// steps: give the function three to four parameters
+// ==> assign each parameter to a constructor variable
+// ==> give the constructor it's own object's function
+// ==> create a few cars for examples
+// output: return car
+
+
+
+
+
+// function CarConstructor
