@@ -43,7 +43,18 @@ if (horseColors.length === horseNames.length) {
 // output: return car
 
 
+function CarConstructor(make, model, year, color) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+  this.color = color;
 
-
-
-// function CarConstructor
+  this.honk = function beepBeep(volume) {
+    if (volume < 10) {
+      console.log('beep');
+    } else {
+      console.log('BEEEP!!');
+    }
+  }
+  console.log('New initialization of car');
+}
