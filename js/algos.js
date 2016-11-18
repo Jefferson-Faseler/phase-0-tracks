@@ -21,3 +21,5 @@ for (var i = 0; i < itemsOnMyDesk.length; i++) {
 }
 
 console.log(longest);
+// ==> Photo of Family
+
