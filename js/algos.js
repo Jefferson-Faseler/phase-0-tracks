@@ -10,7 +10,7 @@
 // ==> Move on to next element.
 // output: return var with stored element
 
-var itemsOnMyDesk = ['Mouse', 'Keyboard', 'Clock', 'Computer',
+var deskItems = ['Mouse', 'Keyboard', 'Clock', 'Computer',
 'Memo Book', 'Candle', 'Mousepad', 'Photo of Family'];
 
 function elementLength(array) {
@@ -35,7 +35,13 @@ function elementLength(array) {
 // ==> else return false.
 // output: return true or false
 
+var colorShapes = { square: 'red', triangle: 'yellow', circle: 'blue'};
+var nasaLogo = { nasaLetters: 'white', circle: 'blue', chevron: 'red', 
+stars: 'white', ring: 'white'};
+var toilet = { bowl: 'white', tank: 'white', ring: 'white', base: 'white'};
+
+
 
 // DRIVER CODE //
-console.log(elementLength(itemsOnMyDesk));
+console.log(elementLength(deskItems));
 // ==> Photo of Family
