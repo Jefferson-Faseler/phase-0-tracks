@@ -13,13 +13,15 @@
 var itemsOnMyDesk = ['Mouse', 'Keyboard', 'Clock', 'Computer',
 'Memo Book', 'Candle', 'Mousepad', 'Photo of Family'];
 
-for (var i = 0; i < itemsOnMyDesk.length; i++) {
-  var longest = itemsOnMyDesk[0];
-  if (longest <= itemsOnMyDesk[i]) {
-    longest = itemsOnMyDesk[i];
-  }
+function elementLength(array) {
+  for (var i = 0; i < array.length; i++) {
+    var longest = array[0];
+    if (longest <= array[i]) {
+      longest = array[i];
+    } 
+  } return longest;
 }
 
-console.log(longest);
+console.log(elementLength(itemsOnMyDesk));
 // ==> Photo of Family
 
