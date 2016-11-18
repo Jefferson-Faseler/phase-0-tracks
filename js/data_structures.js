@@ -1,12 +1,12 @@
-var colors = ['blue', 'green', 'red', 'yellow'];
-var names = ['Ed', 'Ned', 'Ted', 'Jed'];
+var horseColors = ['blue', 'green', 'red', 'yellow'];
+var horseNames = ['Ed', 'Ned', 'Ted', 'Jed'];
 var horses = {};
 
-colors.push('#A93768');
-names.push('Fred');
+horseColors.push('#A93768');
+horseNames.push('Fred');
 
-console.log(colors);
-console.log(names);
+// console.log(colors);
+// console.log(names);
 
 // Keys are horse names
 // Values are colors
@@ -17,7 +17,19 @@ console.log(names);
 // output: true or false
 
 // Steps: assign horse object
-// ==> use two for loops to add the names as keys and values as colors
+// ==> use a for loop to add the names as keys and values as colors
 // ==> loop based upon length of array
-// ==> use color for loop inside of name for loop
 // output: horse key/value pairs
+
+var horseCreator = function creator(names, colors) {
+  for (var n = 0; n < names.length; n++) {
+    horses[names[n]] = colors[n];
+  }
+  return horses;
+}
+
+if (horseColors.length === horseNames.length) {
+  console.log(horseCreator(horseNames, horseColors));
+} else {
+  console.log('The arrays are not the same length');
+}
