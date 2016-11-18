@@ -58,3 +58,18 @@ function CarConstructor(make, model, year, color) {
   }
   console.log('New initialization of car');
 }
+
+var car1 = new CarConstructor('Honda', 'CRV', 2001, 'red');
+console.log('Our new car is a: ' + car1.model);
+console.log(car1);
+console.log("The car can honk too!");
+car1.honk(10000);
+
+var car2 = new CarConstructor('Ford', 'Ranger', 2002, 'black');
+console.log(car2);
+
+var car3 = new CarConstructor('Subaru', 'Outback', 1998, 'green');
+console.log('This was Ethan\'s first car');
+console.log('It was not loud.');
+car3.honk(1);
+
