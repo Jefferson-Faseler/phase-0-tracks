@@ -25,6 +25,12 @@
   // else it returns false
 
 // RELEASE 2
+// function that takes integer as length to give array of strings
+// steps: function takes integer as parameter and outputs
+// ==> array with equal length to the integer
+// ==> containing only random strings
+// output: array of strings of the given length
+
 
 function elementLength(array) {
   for (var i = 0; i < array.length; i++) {
@@ -35,14 +41,13 @@ function elementLength(array) {
   } return longest;
 }
 
+
 var objectMatcher = function (firstObject, secondObject) {
   for (key in firstObject) {
     if (firstObject[key] == secondObject[key]) {
       return true; 
-    } else {
-      return false;
-    }
-  }
+    } 
+  } return false;
 }
 
 
