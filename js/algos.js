@@ -85,20 +85,20 @@ console.log(objectMatcher(nasaLogo, toilet));
 // Printed arrays fed through 'longest word' function
 console.log(elementLength(gibberishDispenser(3)));
 // ==>
-console.log(elementLength(gibberishDispensergibberishDispenser(4)));
+console.log(elementLength(gibberishDispenser(4)));
 // ==>
-console.log(elementLength(gibberishDispensergibberishDispenser(5)));
+console.log(elementLength(gibberishDispenser(5)));
 // ==>
-console.log(elementLength(gibberishDispensergibberishDispenser(6)));
+console.log(elementLength(gibberishDispenser(6)));
 // ==>
-console.log(elementLength(gibberishDispensergibberishDispenser(7)));
+console.log(elementLength(gibberishDispenser(7)));
 // ==>
-console.log(elementLength(gibberishDispensergibberishDispenser(8)));
+console.log(elementLength(gibberishDispenser(8)));
 // ==>
-console.log(elementLength(gibberishDispensergibberishDispenser(9)));
+console.log(elementLength(gibberishDispenser(9)));
 // ==>
-console.log(elementLength(gibberishDispensergibberishDispenser(10)));
+console.log(elementLength(gibberishDispenser(10)));
 // ==>
-console.log(elementLength(gibberishDispensergibberishDispenser(10)));
+console.log(elementLength(gibberishDispenser(10)));
 // ==>
-console.log(elementLength(gibberishDispensergibberishDispenser(10)));
+console.log(elementLength(gibberishDispenser(10)));
