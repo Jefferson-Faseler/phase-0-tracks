@@ -72,4 +72,3 @@ var car3 = new CarConstructor('Subaru', 'Outback', 1998, 'green');
 console.log('This was Ethan\'s first car');
 console.log('It was not loud.');
 car3.honk(1);
-
