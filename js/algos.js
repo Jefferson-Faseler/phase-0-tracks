@@ -51,6 +51,15 @@ var objectMatcher = function (firstObject, secondObject) {
 }
 
 
+var jibberishDispenser = function (integer) {
+  var gibberishArray = [];
+  var possibleLetters = 'abcdefghijklmnopqrstuvwxyz';
+    for (var i = 0; i < integer; i++) {
+      gibberishArray.push(possibleLetters.charAt(Math.floor(Math.random() * 26)));
+    }
+  return gibberishArray;
+}
+
 var deskItems = ['Mouse', 'Keyboard', 'Clock', 'Computer',
 'Memo Book', 'Candle', 'Mousepad', 'Photo of Family'];
 var colorShapes = { square: 'red', triangle: 'yellow', circle: 'blue'};
