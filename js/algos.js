@@ -69,6 +69,7 @@ var gibberishDispenser = function (integer) {
 
 var deskItems = ['Mouse', 'Keyboard', 'Clock', 'Computer',
 'Memo Book', 'Candle', 'Mousepad', 'Photo of Family'];
+
 var colorShapes = { square: 'red', triangle: 'yellow', circle: 'blue'};
 var nasaLogo = { nasaLetters: 'white', circle: 'blue', chevron: 'red', 
 stars: 'white', ring: 'white'};
