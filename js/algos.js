@@ -51,11 +51,13 @@ var objectMatcher = function (firstObject, secondObject) {
 }
 
 
-var jibberishDispenser = function (integer) {
+var gibberishDispenser = function (integer) {
   var gibberishArray = [];
+  var gibberish = ''
   var possibleLetters = 'abcdefghijklmnopqrstuvwxyz';
     for (var i = 0; i < integer; i++) {
-      gibberishArray.push(possibleLetters.charAt(Math.floor(Math.random() * 26)));
+      gibberish += (possibleLetters.charAt(Math.floor(Math.random() * 26)));
+      gibberishArray.push(gibberish);
     }
   return gibberishArray;
 }
@@ -79,3 +81,24 @@ console.log(objectMatcher(colorShapes, toilet));
 // ==> false
 console.log(objectMatcher(nasaLogo, toilet));
 // ==> true
+
+// Printed arrays fed through 'longest word' function
+console.log(elementLength(gibberishDispenser(3)));
+// ==>
+console.log(elementLength(gibberishDispensergibberishDispenser(4)));
+// ==>
+console.log(elementLength(gibberishDispensergibberishDispenser(5)));
+// ==>
+console.log(elementLength(gibberishDispensergibberishDispenser(6)));
+// ==>
+console.log(elementLength(gibberishDispensergibberishDispenser(7)));
+// ==>
+console.log(elementLength(gibberishDispensergibberishDispenser(8)));
+// ==>
+console.log(elementLength(gibberishDispensergibberishDispenser(9)));
+// ==>
+console.log(elementLength(gibberishDispensergibberishDispenser(10)));
+// ==>
+console.log(elementLength(gibberishDispensergibberishDispenser(10)));
+// ==>
+console.log(elementLength(gibberishDispensergibberishDispenser(10)));
