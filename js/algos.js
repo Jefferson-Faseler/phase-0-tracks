@@ -84,21 +84,22 @@ console.log(objectMatcher(nasaLogo, toilet));
 
 // Printed arrays fed through 'longest word' function
 console.log(elementLength(gibberishDispenser(3)));
-// ==>
+// ==> maw
 console.log(elementLength(gibberishDispenser(4)));
-// ==>
+// ==> aehj
 console.log(elementLength(gibberishDispenser(5)));
-// ==>
+// ==> hyvjw
 console.log(elementLength(gibberishDispenser(6)));
-// ==>
+// ==> tbskmg
 console.log(elementLength(gibberishDispenser(7)));
-// ==>
+// ==> dhmjnrz
 console.log(elementLength(gibberishDispenser(8)));
-// ==>
+// ==> invhswec
 console.log(elementLength(gibberishDispenser(9)));
-// ==>
+// ==> vjrhfuofd
 console.log(elementLength(gibberishDispenser(10)));
-// ==>
+// ==> wucffmiouj
 console.log(elementLength(gibberishDispenser(10)));
-// ==>
+// ==> rnfyehefeo
 console.log(elementLength(gibberishDispenser(10)));
+// ==> bqqstqwccj
