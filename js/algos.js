@@ -30,6 +30,11 @@
 // ==> array with equal length to the integer
 // ==> containing only random strings
 // output: array of strings of the given length
+  // generate random words
+  // steps: at each for loop iteration add a random character to 
+  // ==> string until loop is complete.
+  // ==> feed through array-length function
+  // output: random word
 
 
 function elementLength(array) {
