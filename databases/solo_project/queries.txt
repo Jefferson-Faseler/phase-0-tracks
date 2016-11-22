@@ -1,0 +1,98 @@
+1. Displaying businesses table
+query:
+SELECT * FROM businesses;  
+
+output:
+1|Burly|coffee|4
+2|Bravo|grocery|6
+3|DeKalb Hardware|hardware|2
+4|BC|bodega|3
+
+2. Updating based upon condition in subquery 
+  Derek just got hired. (What an inefficient database!)
+query:
+UPDATE businesses 
+SET num_of_employees=(
+SELECT count(business_id)
+FROM employees
+WHERE business_id=1) 
+WHERE name='Burly';
+
+data:
+1|Burly|coffee|5
+2|Bravo|grocery|6
+3|DeKalb Hardware|hardware|2
+4|BC|bodega|3
+
+3. displaying both tables
+query:
+SELECT *
+FROM businesses, employees
+WHERE employees.business_id = businesses.id;
+
+output:
+4|BC|bodega|3|1|4|Conrad Gallo|20050118
+4|BC|bodega|3|2|4|Dominic Stirling|20060216
+1|Burly|coffee|5|3|1|Cesar Corndio|20111220
+1|Burly|coffee|5|4|1|Robert Orlando|20150713
+3|DeKalb Hardware|hardware|2|5|3|Ashley Miles|20090203
+1|Burly|coffee|5|6|1|Hannah Sampson|20140221
+2|Bravo|grocery|6|7|2|Will Blaine|20151118
+1|Burly|coffee|5|8|1|Amanda Lincoln|20070724
+2|Bravo|grocery|6|9|2|Rachel Derby|20160217
+2|Bravo|grocery|6|10|2|Miles Anthony|20060609
+2|Bravo|grocery|6|11|2|Emory Jaxon|20110916
+4|BC|bodega|3|12|4|Esteban Andres|20140617
+3|DeKalb Hardware|hardware|2|13|3|Makram Abdul|20090203
+2|Bravo|grocery|6|14|2|Bailey Jones|20140319
+2|Bravo|grocery|6|15|2|Ben Fenton|20150112
+1|Burly|coffee|5|16|1|Derek Ward|20161104
+
+4. displaying user friendly data alphabetically by business name
+query:
+
+
+output:
+BC|Conrad Gallo|20050118
+BC|Dominic Stirling|20060216
+BC|Esteban Andres|20140617
+Bravo|Will Blaine|20151118
+Bravo|Rachel Derby|20160217
+Bravo|Miles Anthony|20060609
+Bravo|Emory Jaxon|20110916
+Bravo|Bailey Jones|20140319
+Bravo|Ben Fenton|20150112
+Burly|Cesar Corndio|20111220
+Burly|Robert Orlando|20150713
+Burly|Hannah Sampson|20140221
+Burly|Amanda Lincoln|20070724
+Burly|Derek Ward|20161104
+DeKalb Hardware|Ashley Miles|20090203
+DeKalb Hardware|Makram Abdul|20090203
+
+5. Will and another employee who started in 2014 were stealing twinkies from Bravo
+query:
+DELETE FROM employees
+WHERE id IN 
+(SELECT id
+FROM employees
+WHERE start_date LIKE '2014____'
+AND business_id =2
+OR name = 'Will Blaine');
+
+data:
+1|4|Conrad Gallo|20050118
+2|4|Dominic Stirling|20060216
+3|1|Cesar Corndio|20111220
+4|1|Robert Orlando|20150713
+5|3|Ashley Miles|20090203
+6|1|Hannah Sampson|20140221
+8|1|Amanda Lincoln|20070724
+9|2|Rachel Derby|20160217
+10|2|Miles Anthony|20060609
+11|2|Emory Jaxon|20110916
+12|4|Esteban Andres|20140617
+13|3|Makram Abdul|20090203
+15|2|Ben Fenton|20150112
+16|1|Derek Ward|20161104
+
