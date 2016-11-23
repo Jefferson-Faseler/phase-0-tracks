@@ -51,17 +51,17 @@ create_schedule_table = <<-SCRIPT
     user_id INTEGER,
     day_id INTEGER,
     time_id INTEGER,
-    FOREIGN KEY user_id REFERENCES users(id),
-    FOREIGN KEY day_id REFERENCES days(id),
-    FOREIGN KEY time_id REFERENCES times(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (day_id) REFERENCES days(id),
+    FOREIGN KEY (time_id) REFERENCES times(id)
   )
 SCRIPT
 
-# # create table
-# database.execute(create_user_table)
-# database.execute(create_day_table)
-# database.execute(create_time_table)
-# database.execute(create_schedule_table)
+# create table
+database.execute(create_user_table)
+database.execute(create_day_table)
+database.execute(create_time_table)
+database.execute(create_schedule_table)
 
 # # create test users
 # def create_users (db, name)
