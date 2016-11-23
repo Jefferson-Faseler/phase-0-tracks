@@ -72,6 +72,8 @@ end
   create_users(database, FAKER::Name.name)
 end
 
+database.execute("SELECT * FROM users")
+
 
 
 
