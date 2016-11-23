@@ -52,7 +52,6 @@ SCRIPT
 # create table
 database.execute(create_user_table)
 database.execute(create_day_table)
-database.execute(create_time_table)
 database.execute(create_schedule_table)
 
 # create test users
@@ -73,8 +72,13 @@ end
 
 # add_day_values(database)
 
+def add_test_schedules(db, user, day, time)
+  db.execute("INSERT INTO schedules (user_id, day_id, time) VALUES (?,?,?)", [user, day, time])
+end
 
-
+200.times do
+  add_test_schedules(database, rand(1..100), rand(1..7), rand(24))
+end
 
 
 
