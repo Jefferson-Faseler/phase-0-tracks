@@ -35,13 +35,6 @@ create_day_table = <<-SCRIPT
   )
 SCRIPT
 
-# time table command
-create_time_table = <<-SCRIPT
-  CREATE TABLE IF NOT EXISTS times(
-    id INTEGER PRIMARY KEY,
-    time VARCAHR(15)
-  )
-SCRIPT
 
 # schedule table command
 # acts as joiner
@@ -50,10 +43,9 @@ create_schedule_table = <<-SCRIPT
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
     day_id INTEGER,
-    time_id INTEGER,
+    time INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (day_id) REFERENCES days(id),
-    FOREIGN KEY (time_id) REFERENCES times(id)
+    FOREIGN KEY (day_id) REFERENCES days(id)
   )
 SCRIPT
 
@@ -64,7 +56,7 @@ database.execute(create_time_table)
 database.execute(create_schedule_table)
 
 # create test users
-def create_users (db, name)
+def create_users(db, name)
   db.execute("INSERT INTO users (name) VALUES (?)", [name])
 end
 
@@ -72,14 +64,15 @@ end
 #   create_users(database, Faker::Name.name)
 # end
 
-def add_day_values (db)
+def add_day_values(db)
   days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   days_of_week.each do |day|
     db.execute("INSERT INTO days (day) VALUES (?)", [day])
   end
 end
 
-add_day_values(database)
+# add_day_values(database)
+
 
 
 
