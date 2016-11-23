@@ -25,6 +25,7 @@ Angela|Jolie|JoeBob's Sportz Barn|1|It's just a barn, there were no sports
 Merryl|Streepman|The Beagle Nightclub||Cute beagles
 
 
+
 4.
 query:
 SELECT u.first_name, u.last_name, b.name, r.stars, r.comment
