@@ -63,16 +63,14 @@ database.execute(create_day_table)
 database.execute(create_time_table)
 database.execute(create_schedule_table)
 
-# # create test users
-# def create_users (db, name)
-#   db.execute("INSERT INTO users (name) VALUES (?)", [name])
-# end
+# create test users
+def create_users (db, name)
+  db.execute("INSERT INTO users (name) VALUES (?)", [name])
+end
 
-# 100.times do
-#   create_users(database, FAKER::Name.name)
-# end
-
-# database.execute("SELECT * FROM users")
+100.times do
+  create_users(database, Faker::Name.name)
+end
 
 
 
