@@ -68,9 +68,18 @@ def create_users (db, name)
   db.execute("INSERT INTO users (name) VALUES (?)", [name])
 end
 
-100.times do
-  create_users(database, Faker::Name.name)
+# 100.times do
+#   create_users(database, Faker::Name.name)
+# end
+
+def add_day_values (db)
+  days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  days_of_week.each do |day|
+    db.execute("INSERT INTO days (day) VALUES (?)", [day])
+  end
 end
+
+add_day_values(database)
 
 
 
