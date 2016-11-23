@@ -17,7 +17,7 @@
 require 'sqlite3'
 require 'faker'
 
-database = SQLite3::Database.new('schedules.db')
+database = SQLite3::Database.new('easy_scheduler.db')
 
 # user table command
 create_user_table = <<-SCRIPT
@@ -57,22 +57,22 @@ create_schedule_table = <<-SCRIPT
   )
 SCRIPT
 
-# create table
-database.execute(create_user_table)
-database.execute(create_day_table)
-database.execute(create_time_table)
-database.execute(create_schedule_table)
+# # create table
+# database.execute(create_user_table)
+# database.execute(create_day_table)
+# database.execute(create_time_table)
+# database.execute(create_schedule_table)
 
-# create test users
-def create_users (db, name)
-  db.execute("INSERT INTO users (name) VALUES (?)", [name])
-end
+# # create test users
+# def create_users (db, name)
+#   db.execute("INSERT INTO users (name) VALUES (?)", [name])
+# end
 
-100.times do
-  create_users(database, FAKER::Name.name)
-end
+# 100.times do
+#   create_users(database, FAKER::Name.name)
+# end
 
-database.execute("SELECT * FROM users")
+# database.execute("SELECT * FROM users")
 
 
 
