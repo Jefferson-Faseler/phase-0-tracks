@@ -27,14 +27,6 @@ create_user_table = <<-SCRIPT
   )
 SCRIPT
 
-# time table command
-create_time_table = <<-SCRIPT
-  CREATE TABLE IF NOT EXISTS times(
-    id INTEGER PRIMARY KEY,
-    time VARCAHR(15)
-  )
-SCRIPT
-
 # day table command
 create_day_table = <<-SCRIPT
   CREATE TABLE IF NOT EXISTS days(
@@ -43,23 +35,47 @@ create_day_table = <<-SCRIPT
   )
 SCRIPT
 
-# time to schedule joiner
-create_time_schedule_joiner = <<-SCRIPT
-  CREATE TABLE IF NOT EXISTS times_schedules(
+# time table command
+create_time_table = <<-SCRIPT
+  CREATE TABLE IF NOT EXISTS times(
+    id INTEGER PRIMARY KEY,
+    time VARCAHR(15)
   )
+SCRIPT
 
 # schedule table command
+# acts as joiner
 create_schedule_table = <<-SCRIPT
   CREATE TABLE IF NOT EXISTS schedules(
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
-    opening INTEGER,
-    time INTEGER,
+    day_id INTEGER,
+    time_id INTEGER,
+    FOREIGN KEY user_id REFERENCES users(id),
+    FOREIGN KEY day_id REFERENCES days(id),
+    FOREIGN KEY time_id REFERENCES times(id)
   )
 SCRIPT
 
-# create table
-database.execute(create_schedule_table)
 
-# test users
-database.execute("INSERT INTO schedules")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
