@@ -1,16 +1,34 @@
-# An application that compares windows of time and openings so that 
-# people can find ways to meet together. 
-# If I have Tuesday morning, wed afternoon and wed night open and that is it 
-# And Steve has Monday morning, Wed night, and Friday morning open 
-# We can cross reference the times with the program 
-# and it will tell us when we have openings
+# Create an application that cross references users free openings in a week
+# With another user they are trying to meet
+  # user enters their name and then a day of the week
+  # and any time block they are free
+  # application returns all matching free times for the two users
 
-# to get more ambitous if you have more than one time 
-# slot that overlap it will tell you how long of a time slot each is.
+# Application setup and testing 
+# Create a way to store information for users and their schedules
+# Create database for three tables. 1. users 2. schedules(joiner) 3. days
+# Steps: create ruby script that runs sqlite script to create database
+# Use same scripting method to create three tables
 
-# user enters their name and then a day of the week
-# and any time block they are free
+# schedule table
+# primary keys, user_id the schedule belongs to, day_id, time in 24hr format
+    # add fifth column for length of time block
 
+
+
+# add test data with ruby methods
+  # create method to create users with Faker gem
+  # create method for populating the schedules table with random data
+  # within proper ranges
+
+## ALGORITHM ##
+# Compare the schedules of two users
+# input: user's name and name of desired person to meet
+# Steps: For each opening in the user's schedule
+  # Compare with each other opening in desired person's schedule
+  # Compare as hashes using .each_pair
+    # if a key/value matches another there is a positive
+    # else there is no matching free time slots
 
 
 
@@ -18,6 +36,7 @@ require 'sqlite3'
 require 'faker'
 
 database = SQLite3::Database.new('easy_scheduler.db')
+database.results_as_hash = true
 
 # user table command
 create_user_table = <<-SCRIPT
@@ -76,12 +95,20 @@ def add_test_schedules(db, user, day, time)
   db.execute("INSERT INTO schedules (user_id, day_id, time) VALUES (?,?,?)", [user, day, time])
 end
 
-200.times do
-  add_test_schedules(database, rand(1..100), rand(1..7), rand(24))
-end
+# 200.times do
+#   add_test_schedules(database, rand(1..100), rand(1..7), rand(24))
+# end
 
+users_schedules = database.execute("
+  SELECT u.name, s.time, d.day 
+  FROM schedules s 
+  INNER JOIN users u 
+  ON s.user_id=u.id 
+  INNER JOIN days d 
+  ON s.day_id=d.id 
+  WHERE u.id = 10")
 
-
+p users_schedules
 
 
 
