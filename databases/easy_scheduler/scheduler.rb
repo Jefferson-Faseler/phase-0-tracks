@@ -12,8 +12,9 @@
 
 # schedule table
 # primary keys, user_id the schedule belongs to, day_id, time in 24hr format
-    # add fifth column for length of time block
-
+    # fifth column for length of time block
+    # develop mathematical formula for length of time causing overlap
+      # ie: Wed 12:00 for 3 hours would overlap with Wed 13:00 for 2 hours
 
 
 # add test data with ruby methods
@@ -61,8 +62,9 @@ create_schedule_table = <<-SCRIPT
   CREATE TABLE IF NOT EXISTS schedules(
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
-    day_id INTEGER,
-    time INTEGER,
+    day_id INTEGER NOT NULL,
+    start_time INTEGER NOT NULL,
+    end_time INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (day_id) REFERENCES days(id)
   )
@@ -78,7 +80,7 @@ def create_users(db, name)
   db.execute("INSERT INTO users (name) VALUES (?)", [name])
 end
 
-# 100.times do
+# 10.times do
 #   create_users(database, Faker::Name.name)
 # end
 
@@ -91,24 +93,26 @@ end
 
 # add_day_values(database)
 
-def add_test_schedules(db, user, day, time)
-  db.execute("INSERT INTO schedules (user_id, day_id, time) VALUES (?,?,?)", [user, day, time])
+def add_test_schedules(db, user, day, start_time, end_time)
+  db.execute("INSERT INTO schedules (user_id, day_id, start_time, end_time) VALUES (?,?,?,?)", [user, day, start_time, end_time])
 end
 
 # 200.times do
-#   add_test_schedules(database, rand(1..100), rand(1..7), rand(24))
+#   start_time = rand(17)
+#   end_time = start_time + rand(7)
+#   add_test_schedules(database, rand(1..100), rand(1..7), start_time, end_time)
 # end
 
-users_schedules = database.execute("
-  SELECT u.name, s.time, d.day 
-  FROM schedules s 
-  INNER JOIN users u 
-  ON s.user_id=u.id 
-  INNER JOIN days d 
-  ON s.day_id=d.id 
-  WHERE u.id = 10")
+# users_schedules = database.execute("
+#   SELECT u.name, s.time, d.day 
+#   FROM schedules s 
+#   INNER JOIN users u 
+#   ON s.user_id=u.id 
+#   INNER JOIN days d 
+#   ON s.day_id=d.id 
+#   WHERE u.id = 10")
 
-p users_schedules
+# p users_schedules
 
 
 
