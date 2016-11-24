@@ -37,7 +37,7 @@ require 'sqlite3'
 require 'faker'
 
 database = SQLite3::Database.new('easy_scheduler.db')
-database.results_as_hash = true
+# database.results_as_hash = true
 
 # user table command
 create_user_table = <<-SCRIPT
@@ -63,8 +63,7 @@ create_schedule_table = <<-SCRIPT
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
     day_id INTEGER NOT NULL,
-    start_time INTEGER NOT NULL,
-    end_time INTEGER NOT NULL,
+    time INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (day_id) REFERENCES days(id)
   )
@@ -75,14 +74,14 @@ database.execute(create_user_table)
 database.execute(create_day_table)
 database.execute(create_schedule_table)
 
-# create test users
+# creates test users
 def create_users(db, name)
   db.execute("INSERT INTO users (name) VALUES (?)", [name])
 end
 
-# 10.times do
-#   create_users(database, Faker::Name.name)
-# end
+10.times do
+  create_users(database, Faker::Name.name)
+end
 
 def add_day_values(db)
   days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -93,24 +92,37 @@ end
 
 # add_day_values(database)
 
-def add_test_schedules(db, user, day, start_time, end_time)
-  db.execute("INSERT INTO schedules (user_id, day_id, start_time, end_time) VALUES (?,?,?,?)", [user, day, start_time, end_time])
+
+# 24 hour clock
+def add_test_schedules(db, user, day, time)
+  db.execute("INSERT INTO schedules (user_id, day_id, time) VALUES (?,?,?)", [user, day, time])
 end
 
-# 200.times do
-#   start_time = rand(17)
-#   end_time = start_time + rand(7)
-#   add_test_schedules(database, rand(1..100), rand(1..7), start_time, end_time)
-# end
+# creates row for each available hour
+def add_row_per_hour(db, user, day, time, length)
+  until length == 0
+    add_test_schedules(db, user, day, time)
+    length -= 1
+    time += 1
+  end
+end
 
-# users_schedules = database.execute("
-#   SELECT u.name, s.time, d.day 
-#   FROM schedules s 
-#   INNER JOIN users u 
-#   ON s.user_id=u.id 
-#   INNER JOIN days d 
-#   ON s.day_id=d.id 
-#   WHERE u.id = 10")
+200.times do
+  user = rand(1..10)
+  day = rand(1..7)
+  time = rand(19)
+  length = rand(1..5) # length in hours
+  add_row_per_hour(database, user, day, time, length)
+end
+
+users_schedules = database.execute("
+  SELECT u.name, s.time, d.day 
+  FROM schedules s 
+  INNER JOIN users u 
+  ON s.user_id=u.id 
+  INNER JOIN days d 
+  ON s.day_id=d.id 
+  WHERE u.id = 10")
 
 # p users_schedules
 
@@ -119,12 +131,22 @@ end
 
 
 
+SELECT u.name, s.time, d.day 
+FROM schedules s 
+INNER JOIN users u 
+ON s.user_id=u.id 
+INNER JOIN days d 
+ON s.day_id=d.id 
+ORDER BY s.day_id;
 
-
-
-
-
-
+SELECT u.name, s.time, d.day 
+FROM schedules s 
+INNER JOIN users u 
+ON s.user_id=u.id 
+INNER JOIN days d 
+ON s.day_id=d.id 
+WHERE u.name='Barry Bauch'
+OR u.name='Lazaro Berg';
 
 
 
