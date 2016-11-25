@@ -131,23 +131,5 @@ users_schedules = database.execute("
 
 
 
-SELECT u.name, s.time, d.day 
-FROM schedules s 
-INNER JOIN users u 
-ON s.user_id=u.id 
-INNER JOIN days d 
-ON s.day_id=d.id 
-ORDER BY s.day_id;
-
-SELECT u.name, s.time, d.day 
-FROM schedules s 
-INNER JOIN users u 
-ON s.user_id=u.id 
-INNER JOIN days d 
-ON s.day_id=d.id 
-WHERE u.name='Barry Bauch'
-OR u.name='Lazaro Berg';
-
-
 
 
