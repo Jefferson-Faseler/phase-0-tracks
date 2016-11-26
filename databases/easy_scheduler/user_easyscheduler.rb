@@ -8,6 +8,8 @@
 
 # Allow each user to add times to their schedule
   # insert nested key value pairs for day and time into hash
+    # create empty array for day when passed as an argument
+      # use ||= operator so that the day is not overwritten
     # when user enters day it creates key, with nested array for value
     # array elements are hour blocks the user is free
   # output: return updated hash
@@ -24,6 +26,7 @@
   # run uniq! each time user adds time to hash
   # output: return unique hash
 
+
 class User
 
   def initialize(name)
@@ -32,7 +35,7 @@ class User
   end
 
   def add_to_schedule(day, time, length)
-    @schedule[day] = []
+    @schedule[day] ||= []
     length.times do 
       @schedule[day].push(time).uniq!
       time += 1
