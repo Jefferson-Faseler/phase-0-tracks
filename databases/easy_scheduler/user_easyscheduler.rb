@@ -32,7 +32,9 @@ require_relative 'scheduler'
 
 
 class User
-
+attr_accessor :day
+attr_reader :name
+  
   def initialize(name)
     @name = name
     @schedule = {}
@@ -45,10 +47,14 @@ class User
   def add_to_schedule(day, time, length, database)
     if check_day(day)
       @schedule[day] ||= []
-      length.times do 
-        @schedule[day].push(time).uniq!
-        add_to_db(database, day, time)
-        time += 1
+      length.times do
+        if time_verification(day, time)
+          @schedule[day].push(time)
+          add_to_db(database, day, time)
+          time += 1
+        else 
+          time += 1
+        end
       end
     else
       puts "'#{day}' is not a valid day."
@@ -56,22 +62,11 @@ class User
     @schedule
   end
 
-# method takes time as optional argument, deleting day if no argument
-# was given or deleting specific times if argument was given
-  def remove_time(database, day, *time)
-      if @schedule[day].include?(time[0])
-        i = 0
-        until !@schedule[day].include?(time[i])
-          delete_from_db(database, day, time[i])
-          @schedule[day].delete(time[i])
-          i += 1
-        end
-      elsif time.empty?
-        @schedule.delete(day)
-        time.each do |t|
-          delete_from_db(database, day, t)
-        end
-      end
+  def delete_from_schedule(database, day, time)
+    if time_verification(time)
+      delete_from_db(database, day, time)
+      @schedule[day].delete(time)
+    end
     @schedule
   end
 
@@ -83,7 +78,6 @@ class User
     end
   end
 
-    
   private
 
   def check_day(day)
@@ -93,6 +87,16 @@ class User
     end
   end
 
+  def time_verification(day, time)
+    if !@schedule[day].include?(time)
+      return true
+    elsif @schedule[day].include?(time)
+      return false
+    else
+      return nil
+    end
+  end
+      
   def add_to_db(database, day, time)
   user_id = find_user_id(database)
   day_id = find_day_id(database, day)

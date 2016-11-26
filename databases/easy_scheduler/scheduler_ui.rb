@@ -16,14 +16,26 @@ require 'sqlite3'
 require 'faker'
 
 database = SQLite3::Database.new('easy_scheduler.db')
+database.results_as_hash = true
 
 def new_user(database)
-  puts "Welcome to easy scheduler"
-  puts 'Please enter your full name: '
-  fullname = gets.chomp
-  new_user = User.new(fullname)
+  puts 'Welcome to easy scheduler'
+  puts 'Please enter a unique username:'
+  username = gets.chomp
+  new_user = User.new(username)
   new_user.create_user(database)
-  return new_user
+  return new_user.name
+end
+
+def find_username(username, database)
+  database.execute("SELECT name FROM USERS WHERE name = '#{username}'")
+end
+
+def existing_user(database)
+  puts 'Enter your username'
+  user = gets.chomp
+  puts find_username(user, database)
+  return user = find_username(user, database).to_s
 end
 
 def schedule_times(username, database)
@@ -54,19 +66,61 @@ def unschedule_times(username, database)
   until confirm == 'yes' || confirm == 'EXIT'
     puts 'Enter the day you would like to remove the time from.'
     day = gets.chomp
-    puts 'Enter all the times you would like to remove, or simply press enter to remove the whole day.'
-    times = gets.chomp
+    puts 'Enter the hour you would like to remove.'
+    time = gets.chomp
     puts "The day you entered is: #{day}"
     puts "The time you entered is: #{times}"
     puts "Is this information correct? Type 'yes' to confirm or 'EXIT' to quit"
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    username.remove_time(database, day, times)
+    username.remove_time(database, day, time)
     username.print_schedule
   end
   return username
 end
 
+def user?(username)
+  if username == nil
+    puts "Please sign in first"
+  else
+    return false
+  end
+end
 
-unschedule_times(schedule_times(new_user(database),database),database)
+loop do
+  puts "1. create a user account"
+  puts "2. login to scheduler"
+  puts "3. add time to schedule"
+  puts "4. remove time from schedule"
+  puts "5. print your schedule"
+  puts "'EXIT' to quit the program"
+    input = gets.chomp
+    user ||= nil
+      if input == '1'
+        user = new_user(database)
+        p user
+      elsif input == '2'
+        user = existing_user(database)
+      elsif input == '3'
+        if user?(user)
+          break
+        else
+          schedule_times(user, database)
+        end
+      elsif input == '4'
+        if user?(user)
+          break
+        else
+          unschedule_times(user, database)
+        end
+      elsif input == '5'
+        if user?(user)
+          break
+        else
+          user.print_schedule
+        end
+      elsif input == 'EXIT'
+        break
+      end
+end
