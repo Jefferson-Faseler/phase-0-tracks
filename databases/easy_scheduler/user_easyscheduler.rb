@@ -35,10 +35,14 @@ class User
   end
 
   def add_to_schedule(day, time, length)
-    @schedule[day] ||= []
-    length.times do 
-      @schedule[day].push(time).uniq!
-      time += 1
+    if check_day(day)
+      @schedule[day] ||= []
+      length.times do 
+        @schedule[day].push(time).uniq!
+        time += 1
+      end
+    else
+      puts "'#{day}' is not a valid day."
     end
     @schedule
   end
@@ -66,25 +70,38 @@ class User
     end
   end
 
+  private
+
+  def check_day(day)
+    days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    if days_of_week.include?(day)
+      return true
+    end
+  end
+
 end
 
 
 ## DRIVER CODE ##
 temp = User.new('John Smith')
 # => <User:0x007f977d011d98 @name="John Smith", @schedule={}>
-temp.add_to_schedule('Mon', 6,4)
-# => {"Mon"=>[6, 7, 8, 9]}
-temp.add_to_schedule('Tue',7,3)
-# => {"Mon"=>[6, 7, 8, 9], "Tue"=>[7, 8, 9]}
+temp.add_to_schedule('Monday', 6,4)
+# => {"Monday"=>[6, 7, 8, 9]}
+temp.add_to_schedule('Tuesday',7,3)
+# => {"Monday"=>[6, 7, 8, 9], "Tuesday"=>[7, 8, 9]}
 temp.print_schedule
   # Your entire schedule for this week:
-  # On Mon you are free at these times:
+  # On Monday you are free at these times:
   # 6
   # 7
   # 8
   # 9
-  # On Tue you are free at these times:
+  # On Tuesday you are free at these times:
   # 7
   # 8
   # 9
+temp.add_to_schedule('Monday',7,4)
+# => {"Monday"=>[6, 7, 8, 9, 10]}
+temp.add_to_schedule('Mon',6,4)
+# => "'Mon' is not a valid day."
 
