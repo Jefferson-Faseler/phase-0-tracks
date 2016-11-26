@@ -35,7 +35,7 @@
 
 require 'sqlite3'
 require 'faker'
-# require_relative 'userclass'
+require_relative 'user_easyscheduler'
 
 database = SQLite3::Database.new('easy_scheduler.db')
 # database.results_as_hash = true

@@ -1,10 +1,18 @@
+# RSPEC FILE NOT WORKING
+# Discover reason later
+
+
 require_relative 'user_easyscheduler'
 
 describe User do
-# let(:user) { User.new('John Smith') }
+let(:user) { User.new('John Smith') }
 
-  it 'add time to schedule' do
-    temp = User.new('John Smith')
-    expect(temp.add_to_schedule('Monday', 6, 4)).to eq {'Monday'}
+  it 'adds day and times to schedule' do
+    expect(user.add_to_schedule('Monday', 6,4)).to eq {'Monday'=>[6,7,8,9] }
   end
+
+  it 'does something' do
+    expect(user.something).to eq 'something else'
+  end
+  
 end
