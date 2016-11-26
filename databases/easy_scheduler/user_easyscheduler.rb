@@ -16,6 +16,9 @@
   # use #delete on day the user would like to remove
   # output: return updated schedule
 
+# Allow user to print their schedule
+  # use interpolation and iteration to display days and times
+  # output: to screen and return schedule
 
 
 
@@ -50,11 +53,13 @@ class User
     @schedule
   end
 
-  def schedule
-    @schedule
+  def print_schedule
+    puts 'Your entire schedule for this week:'
+    @schedule.each_key do |day|
+      puts "On #{day} you are free at these times:"
+      @schedule[day].each {|time| puts "#{time}"}
+    end
   end
 
 end
-
-
 
