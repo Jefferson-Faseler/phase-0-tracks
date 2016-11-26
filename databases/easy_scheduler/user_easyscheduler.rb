@@ -25,13 +25,18 @@
 # Do not allow user to enter duplicate times in day
   # run uniq! each time user adds time to hash
   # output: return unique hash
-
+require 'sqlite3'
+require_relative 'scheduler'
 
 class User
 
   def initialize(name)
     @name = name
     @schedule = {}
+  end
+
+  def create_user(database)
+    database.execute("INSERT INTO users (name) VALUES (?)", [@name])
   end
 
   def add_to_schedule(day, time, length)
@@ -70,6 +75,7 @@ class User
     end
   end
 
+    
   private
 
   def check_day(day)
@@ -82,26 +88,26 @@ class User
 end
 
 
-## DRIVER CODE ##
-temp = User.new('John Smith')
-# => <User:0x007f977d011d98 @name="John Smith", @schedule={}>
-temp.add_to_schedule('Monday', 6,4)
-# => {"Monday"=>[6, 7, 8, 9]}
-temp.add_to_schedule('Tuesday',7,3)
-# => {"Monday"=>[6, 7, 8, 9], "Tuesday"=>[7, 8, 9]}
-temp.print_schedule
-  # Your entire schedule for this week:
-  # On Monday you are free at these times:
-  # 6
-  # 7
-  # 8
-  # 9
-  # On Tuesday you are free at these times:
-  # 7
-  # 8
-  # 9
-temp.add_to_schedule('Monday',7,4)
-# => {"Monday"=>[6, 7, 8, 9, 10]}
-temp.add_to_schedule('Mon',6,4)
-# => "'Mon' is not a valid day."
+# ## DRIVER CODE ##
+# temp = User.new('John Smith')
+# # => <User:0x007f977d011d98 @name="John Smith", @schedule={}>
+# temp.add_to_schedule('Monday', 6,4)
+# # => {"Monday"=>[6, 7, 8, 9]}
+# temp.add_to_schedule('Tuesday',7,3)
+# # => {"Monday"=>[6, 7, 8, 9], "Tuesday"=>[7, 8, 9]}
+# temp.print_schedule
+#   # Your entire schedule for this week:
+#   # On Monday you are free at these times:
+#   # 6
+#   # 7
+#   # 8
+#   # 9
+#   # On Tuesday you are free at these times:
+#   # 7
+#   # 8
+#   # 9
+# temp.add_to_schedule('Monday',7,4)
+# # => {"Monday"=>[6, 7, 8, 9, 10]}
+# temp.add_to_schedule('Mon',6,4)
+# # => "'Mon' is not a valid day."
 

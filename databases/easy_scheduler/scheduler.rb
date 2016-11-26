@@ -34,7 +34,6 @@
 
 
 require 'sqlite3'
-require 'faker'
 require_relative 'user_easyscheduler'
 
 database = SQLite3::Database.new('easy_scheduler.db')
@@ -74,58 +73,6 @@ SCRIPT
 database.execute(create_user_table)
 database.execute(create_day_table)
 database.execute(create_schedule_table)
-
-# creates test users
-def create_users(db, name)
-  db.execute("INSERT INTO users (name) VALUES (?)", [name])
-end
-
-10.times do
-  create_users(database, Faker::Name.name)
-end
-
-def add_day_values(db)
-  days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-  days_of_week.each do |day|
-    db.execute("INSERT INTO days (day) VALUES (?)", [day])
-  end
-end
-
-# add_day_values(database)
-
-
-# 24 hour clock
-def add_test_schedules(db, user, day, time)
-  db.execute("INSERT INTO schedules (user_id, day_id, time) VALUES (?,?,?)", [user, day, time])
-end
-
-# creates row for each available hour
-def add_row_per_hour(db, user, day, time, length)
-  until length == 0
-    add_test_schedules(db, user, day, time)
-    length -= 1
-    time += 1
-  end
-end
-
-200.times do
-  user = rand(1..10)
-  day = rand(1..7)
-  time = rand(19)
-  length = rand(1..5) # length in hours
-  add_row_per_hour(database, user, day, time, length)
-end
-
-users_schedules = database.execute("
-  SELECT u.name, s.time, d.day 
-  FROM schedules s 
-  INNER JOIN users u 
-  ON s.user_id=u.id 
-  INNER JOIN days d 
-  ON s.day_id=d.id 
-  WHERE u.id = 10")
-
-# p users_schedules
 
 
 
