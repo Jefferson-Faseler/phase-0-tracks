@@ -25,8 +25,11 @@
 # Do not allow user to enter duplicate times in day
   # run uniq! each time user adds time to hash
   # output: return unique hash
+
 require 'sqlite3'
 require_relative 'scheduler'
+
+
 
 class User
 
@@ -39,11 +42,12 @@ class User
     database.execute("INSERT INTO users (name) VALUES (?)", [@name])
   end
 
-  def add_to_schedule(day, time, length)
+  def add_to_schedule(day, time, length, database)
     if check_day(day)
       @schedule[day] ||= []
       length.times do 
         @schedule[day].push(time).uniq!
+        add_to_db(database, day, time)
         time += 1
       end
     else
@@ -83,6 +87,15 @@ class User
     if days_of_week.include?(day)
       return true
     end
+  end
+
+  def add_to_db(database, day, time)
+  user = database.execute("SELECT id FROM users where name = '#{@name}'")
+  day = database.execute("SELECT id FROM days where day = '#{day}'")
+  database.execute(
+    "INSERT INTO schedules (user_id, day_id, time) 
+    VALUES (?,?,?)",
+    [user, day, time])
   end
 
 end

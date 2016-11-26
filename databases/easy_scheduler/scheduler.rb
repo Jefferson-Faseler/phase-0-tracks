@@ -63,7 +63,7 @@ create_schedule_table = <<-SCRIPT
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
     day_id INTEGER NOT NULL,
-    time INTEGER NOT NULL,
+    times INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (day_id) REFERENCES days(id)
   )
