@@ -20,7 +20,9 @@
   # use interpolation and iteration to display days and times
   # output: to screen and return schedule
 
-
+# Do not allow user to enter duplicate times in day
+  # run uniq! each time user adds time to hash
+  # output: return unique hash
 
 class User
 
@@ -32,7 +34,7 @@ class User
   def add_to_schedule(day, time, length)
     @schedule[day] = []
     length.times do 
-      @schedule[day].push(time)
+      @schedule[day].push(time).uniq!
       time += 1
     end
     @schedule
@@ -62,4 +64,24 @@ class User
   end
 
 end
+
+
+## DRIVER CODE ##
+temp = User.new('John Smith')
+# => <User:0x007f977d011d98 @name="John Smith", @schedule={}>
+temp.add_to_schedule('Mon', 6,4)
+# => {"Mon"=>[6, 7, 8, 9]}
+temp.add_to_schedule('Tue',7,3)
+# => {"Mon"=>[6, 7, 8, 9], "Tue"=>[7, 8, 9]}
+temp.print_schedule
+  # Your entire schedule for this week:
+  # On Mon you are free at these times:
+  # 6
+  # 7
+  # 8
+  # 9
+  # On Tue you are free at these times:
+  # 7
+  # 8
+  # 9
 
