@@ -44,10 +44,29 @@ def schedule_times(username, database)
   end
   if confirm == 'yes'
   username.add_to_schedule(day, time, length, database)
+  username.print_schedule
+  end
+  return username
+end
+
+def unschedule_times(username, database)
+  confirm = nil
+  until confirm == 'yes' || confirm == 'EXIT'
+    puts 'Enter the day you would like to remove the time from.'
+    day = gets.chomp
+    puts 'Enter all the times you would like to remove, or simply press enter to remove the whole day.'
+    times = gets.chomp
+    puts "The day you entered is: #{day}"
+    puts "The time you entered is: #{times}"
+    puts "Is this information correct? Type 'yes' to confirm or 'EXIT' to quit"
+    confirm = gets.chomp
+  end
+  if confirm == 'yes'
+    username.remove_time(database, day, times)
+    username.print_schedule
   end
   return username
 end
 
 
-
-schedule_times(new_user(database), database)
+unschedule_times(schedule_times(new_user(database),database),database)

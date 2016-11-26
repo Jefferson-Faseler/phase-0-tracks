@@ -58,15 +58,19 @@ class User
 
 # method takes time as optional argument, deleting day if no argument
 # was given or deleting specific times if argument was given
-  def remove_time(day, *time)
+  def remove_time(database, day, *time)
       if @schedule[day].include?(time[0])
         i = 0
         until !@schedule[day].include?(time[i])
+          delete_from_db(database, day, time[i])
           @schedule[day].delete(time[i])
           i += 1
         end
       elsif time.empty?
         @schedule.delete(day)
+        time.each do |t|
+          delete_from_db(database, day, t)
+        end
       end
     @schedule
   end
@@ -90,12 +94,29 @@ class User
   end
 
   def add_to_db(database, day, time)
-  user = database.execute("SELECT id FROM users where name = '#{@name}'")
-  day = database.execute("SELECT id FROM days where day = '#{day}'")
+  user_id = find_user_id(database)
+  day_id = find_day_id(database, day)
   database.execute(
-    "INSERT INTO schedules (user_id, day_id, time) 
+    "INSERT INTO schedules (user_id, day_id, time)
     VALUES (?,?,?)",
-    [user, day, time])
+    [user_id, day_id, time])
+  end
+
+  def delete_from_db(database, day, time)
+    database.execute(
+      "DELETE FROM schedules
+      WHERE user_id = #{find_user_id}
+      AND day_id = #{find_day_id(day)}
+      AND time = #{time}"
+      )
+  end
+
+  def find_day_id(database, day)
+    database.execute("SELECT id FROM days WHERE day = '#{day}'")
+  end
+
+  def find_user_id(database)
+    database.execute("SELECT id FROM users WHERE name = '#{@name}'")
   end
 
 end
@@ -123,4 +144,5 @@ end
 # # => {"Monday"=>[6, 7, 8, 9, 10]}
 # temp.add_to_schedule('Mon',6,4)
 # # => "'Mon' is not a valid day."
+
 
