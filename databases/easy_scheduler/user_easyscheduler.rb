@@ -62,29 +62,13 @@ end
 
 def print_schedule(database, username)
   user_id = find_user_id(database, username).join
-  find_days = <<-SCRIPT
-  SELECT day
-  FROM days
-  WHERE id IN (
-  SELECT day_id
-  FROM schedules
-  WHERE user_id=#{user_id}
-  )
-  SCRIPT
-  find_times = <<-SCRIPT
-  SELECT times
-  FROM schedules
-  WHERE user_id=#{user_id}
-  AND day_id = 
-  SCRIPT
-  print_days = database.execute(find_days).flatten
-  print_time = database.execute(find_times).flatten
-  # puts "#{schedule[0]['name']}'s entire schedule for this week:"
-  # schedule.each do |nested_hash|
-  #   puts "On #{schedule[nested_hash]['day']}:"
-  #   puts "You are free at #{schedule[nested_hash]['time']}"
-  # end
-
+  print_days = find_days(database, user_id).flatten
+  puts "#{username}'s schedule for this week:"
+  print_days.each do |day|
+    puts "On #{day}"
+    day_id = find_day_id(database, day).flatten
+    puts find_times(database, user_id, day_id)
+  end
 end
 
 def check_day(day)
@@ -128,6 +112,29 @@ end
 
 def find_user_id(database, username)
   database.execute("SELECT id FROM users WHERE name = '#{username}'")
+end
+
+def find_days(database, user_id)
+  database.execute(<<-SCRIPT
+  SELECT day
+  FROM days
+  WHERE id IN (
+  SELECT day_id
+  FROM schedules
+  WHERE user_id=#{user_id}
+  )
+  SCRIPT
+  )
+end
+
+def find_times(database, user_id, day_id)
+  database.execute(<<-SCRIPT
+  SELECT times
+  FROM schedules
+  WHERE user_id=#{user_id}
+  AND day_id = #{day_id}
+  SCRIPT
+  ).flatten
 end
 
 
