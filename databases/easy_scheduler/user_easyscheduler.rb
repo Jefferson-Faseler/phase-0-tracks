@@ -62,13 +62,14 @@ end
 
 def print_schedule(database, username)
   user_id = find_user_id(database, username).join
-  print_days = find_days(database, user_id).flatten
+  print_days = find_days(database, user_id)
   puts "#{username}'s schedule for this week:"
   print_days.each do |day|
     puts "On #{day}"
-    day_id = find_day_id(database, day).flatten
-    puts find_times(database, user_id, day_id)
+    day_id = find_day_id(database, day).join
+    print find_times(database, user_id, day_id)
   end
+  puts ''
 end
 
 def check_day(day)
@@ -107,11 +108,11 @@ def delete_from_db(database, day, time, username)
 end
 
 def find_day_id(database, day)
-  database.execute("SELECT id FROM days WHERE day = '#{day}'")
+  database.execute("SELECT id FROM days WHERE day = '#{day}'").flatten
 end
 
 def find_user_id(database, username)
-  database.execute("SELECT id FROM users WHERE name = '#{username}'")
+  database.execute("SELECT id FROM users WHERE name = '#{username}'").flatten
 end
 
 def find_days(database, user_id)
@@ -124,7 +125,7 @@ def find_days(database, user_id)
   WHERE user_id=#{user_id}
   )
   SCRIPT
-  )
+  ).flatten
 end
 
 def find_times(database, user_id, day_id)
