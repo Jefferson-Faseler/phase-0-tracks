@@ -9,7 +9,6 @@
 # output: return new scheduled time
 
 
-
 require_relative 'scheduler'
 require_relative 'user_easyscheduler'
 require 'sqlite3'
@@ -70,7 +69,7 @@ def unschedule_times(username)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    delete_form_db(day, time, username)
+    delete_from_db(day, time, username)
     print_schedule(username)
   end
 end
@@ -80,7 +79,6 @@ def user?(username)
     puts "Please sign in first"
   end
 end
-
 
 user = nil
 loop do
@@ -97,22 +95,21 @@ loop do
       elsif input == '2'
         user = existing_user
         puts "You are signed in as #{user}"
-        # update_schedule(user)
       elsif input == '3'
-        if user?(user)
-          break
+        if user == nil
+          puts "Please sign in first"
         else
           schedule_times(user)
         end
       elsif input == '4'
-        if user?(user)
-          break
+        if user == nil
+          puts "Please sign in first"
         else
           unschedule_times(user)
         end
       elsif input == '5'
-        if user?(user)
-          break
+        if user == nil
+          puts "Please sign in first"
         else
           print_schedule(user)
         end

@@ -38,43 +38,6 @@ def find_username(username)
   user = $database.execute("SELECT name FROM USERS WHERE name = '#{username}'")
 end
 
-# def update_schedule(username)
-#   schedule = {}
-#   user_id = find_user_id(username).join
-#   days = find_days(user_id)
-#   days.each do |day|
-#     day_id = find_day_id(day).join
-#     times = find_times(user_id, day_id)
-#     schedule[day] = times
-#   end
-# end
-
-# def add_to_schedule(day, time, length, schedule, username)
-#   if check_day(day)
-#     schedule[day] ||= []
-#     length.times do
-#       if time_verification(username, day, time)
-#         schedule[day].push(time)
-#         add_to_db(day, time, username)
-#         time += 1
-#       else 
-#         time += 1
-#       end
-#     end
-#   else
-#     puts "'#{day}' is not a valid day."
-#   end
-#   schedule
-# end
-
-# def delete_from_schedule(day, time, schedule, username)
-#   if time_verification(username, day, time)
-#     delete_from_db(day, time, username)
-#     schedule[day].delete(time)
-#   end
-#   schedule
-# end
-
 def input_to_id(username, day)
   day_id = find_day_id(day)
   user_id = find_user_id(username)
@@ -82,12 +45,12 @@ def input_to_id(username, day)
 end
 
 def print_schedule(username)
-  user_id = find_user_id(username).join
+  user_id = find_user_id(username)
   print_days = find_days(user_id)
   puts "#{username}'s schedule for this week:"
   print_days.each do |day|
     puts "On #{day}"
-    day_id = find_day_id(day).join
+    day_id = find_day_id(day)
     print find_times(user_id, day_id)
   end
   puts ''
@@ -118,10 +81,7 @@ end
 def add_to_db(day, time, username)
 user_id = find_user_id(username)
 day_id = find_day_id(day)
-$database.execute(
-  "INSERT INTO schedules (user_id, day_id, time)
-  VALUES (?,?,?)",
-  [user_id, day_id, time])
+$database.execute("INSERT INTO schedules (user_id, day_id, time)VALUES (?,?,?)", [user_id, day_id, time])
 time_verification(user_id, day_id, time)
 end
 
@@ -137,12 +97,12 @@ end
 
 # returns SQL day_id
 def find_day_id(day)
-  $database.execute("SELECT id FROM days WHERE day = '#{day}'").flatten
+  $database.execute("SELECT id FROM days WHERE day = '#{day}'").flatten.join
 end
 
 # returns SQL user_id
 def find_user_id(username)
-  $database.execute("SELECT id FROM users WHERE name = '#{username}'").flatten
+  $database.execute("SELECT id FROM users WHERE name = '#{username}'").flatten.join
 end
 
 def find_days(user_id)
@@ -168,31 +128,3 @@ def find_times(user_id, day_id)
   SCRIPT
   ).flatten
 end
-
-
-
-
-# ## DRIVER CODE ##
-# temp = User.new('John Smith')
-# # => <User:0x007f977d011d98 @name="John Smith", @schedule={}>
-# temp.add_to_schedule('Monday', 6,4)
-# # => {"Monday"=>[6, 7, 8, 9]}
-# temp.add_to_schedule('Tuesday',7,3)
-# # => {"Monday"=>[6, 7, 8, 9], "Tuesday"=>[7, 8, 9]}
-# temp.print_schedule
-#   # Your entire schedule for this week:
-#   # On Monday you are free at these times:
-#   # 6
-#   # 7
-#   # 8
-#   # 9
-#   # On Tuesday you are free at these times:
-#   # 7
-#   # 8
-#   # 9
-# temp.add_to_schedule('Monday',7,4)
-# # => {"Monday"=>[6, 7, 8, 9, 10]}
-# temp.add_to_schedule('Mon',6,4)
-# # => "'Mon' is not a valid day."
-
-
