@@ -28,20 +28,19 @@
 
 require 'sqlite3'
 require_relative 'scheduler'
-  
-schedule = {}
+
 
 def create_user(database, username)
   database.execute("INSERT INTO users (name) VALUES (?)", [username])
 end
 
-def add_to_schedule(day, time, length, database)
+def add_to_schedule(day, time, length, database, schedule, username)
   if check_day(day)
     schedule[day] ||= []
     length.times do
-      if time_verification(day, time)
+      if time_verification(day, time, schedule)
         schedule[day].push(time)
-        add_to_db(database, day, time)
+        add_to_db(database, day, time, username)
         time += 1
       else 
         time += 1
@@ -53,20 +52,39 @@ def add_to_schedule(day, time, length, database)
   schedule
 end
 
-def delete_from_schedule(database, day, time)
-  if time_verification(time)
-    delete_from_db(database, day, time)
+def delete_from_schedule(database, day, time, schedule, username)
+  if time_verification(day, time, schedule)
+    delete_from_db(database, day, time, username)
     schedule[day].delete(time)
   end
   schedule
 end
 
-def print_schedule
-  puts 'Your entire schedule for this week:'
-schedule.each_key do |day|
-    puts "On #{day} you are free at these times:"
-    schedule[day].each {|time| puts "#{time}"}
-  end
+def print_schedule(database, username)
+  user_id = find_user_id(database, username).join
+  find_days = <<-SCRIPT
+  SELECT day
+  FROM days
+  WHERE id IN (
+  SELECT day_id
+  FROM schedules
+  WHERE user_id=#{user_id}
+  )
+  SCRIPT
+  find_times = <<-SCRIPT
+  SELECT times
+  FROM schedules
+  WHERE user_id=#{user_id}
+  AND day_id = 
+  SCRIPT
+  print_days = database.execute(find_days).flatten
+  print_time = database.execute(find_times).flatten
+  # puts "#{schedule[0]['name']}'s entire schedule for this week:"
+  # schedule.each do |nested_hash|
+  #   puts "On #{schedule[nested_hash]['day']}:"
+  #   puts "You are free at #{schedule[nested_hash]['time']}"
+  # end
+
 end
 
 def check_day(day)
@@ -76,7 +94,7 @@ if days_of_week.include?(day)
 end
 end
 
-def time_verification(day, time)
+def time_verification(day, time, schedule)
   if !schedule[day].include?(time)
     return true
   elsif schedule[day].include?(time)
@@ -86,20 +104,20 @@ def time_verification(day, time)
   end
 end
       
-def add_to_db(database, day, time)
-user_id = find_user_id(database)
+def add_to_db(database, day, time, username)
+user_id = find_user_id(database, username)
 day_id = find_day_id(database, day)
 database.execute(
-  "INSERT INTO schedules (user_id, day_id, time)
+  "INSERT INTO schedules (user_id, day_id, times)
   VALUES (?,?,?)",
   [user_id, day_id, time])
 end
 
-def delete_from_db(database, day, time)
+def delete_from_db(database, day, time, username)
   database.execute(
     "DELETE FROM schedules
-    WHERE user_id = #{find_user_id}
-    AND day_id = #{find_day_id(day)}
+    WHERE user_id = #{find_user_id(database, username)}
+    AND day_id = #{find_day_id(database, day)}
     AND time = #{time}"
     )
 end
@@ -111,6 +129,7 @@ end
 def find_user_id(database, username)
   database.execute("SELECT id FROM users WHERE name = '#{username}'")
 end
+
 
 
 

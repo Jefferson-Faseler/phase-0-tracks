@@ -37,7 +37,7 @@ def existing_user(database)
   user.flatten!.join
 end
 
-def schedule_times(username, database)
+def schedule_times(username, database, schedule)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts "Enter the day you would like to add to your schedule"
@@ -54,13 +54,13 @@ def schedule_times(username, database)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-  username.add_to_schedule(day, time, length, database)
-  username.print_schedule
+  add_to_schedule(day, time, length, database, schedule, username)
+  print_schedule(schedule)
   end
   return username
 end
 
-def unschedule_times(username, database)
+def unschedule_times(username, database, schedule)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts 'Enter the day you would like to remove the time from.'
@@ -73,8 +73,8 @@ def unschedule_times(username, database)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    username.remove_time(database, day, time)
-    username.print_schedule
+    remove_time(database, day, time, schedule, username)
+    print_schedule(schedule)
   end
   return username
 end
@@ -84,7 +84,8 @@ def user?(username)
     puts "Please sign in first"
   end
 end
-    
+
+schedule = {}
 user = nil
 loop do
   puts "1. create a user account"
@@ -104,19 +105,19 @@ loop do
         if user?(user)
           break
         else
-          schedule_times(user, database)
+          schedule_times(user, database, schedule)
         end
       elsif input == '4'
         if user?(user)
           break
         else
-          unschedule_times(user, database)
+          unschedule_times(user, database, schedule)
         end
       elsif input == '5'
         if user?(user)
           break
         else
-          user.print_schedule
+          print_schedule(database, user)
         end
       elsif input == 'EXIT'
         break
