@@ -30,55 +30,65 @@ require 'sqlite3'
 require_relative 'scheduler'
 
 
-def create_user(database, username)
-  database.execute("INSERT INTO users (name) VALUES (?)", [username])
+def create_user(username)
+  $database.execute("INSERT INTO users (name) VALUES (?)", [username])
 end
 
-def update_schedule(database, username)
-  schedule = {}
-  user_id = find_user_id(database, username).join
-  days = find_days(database, user_id)
-  days.each do |day|
-    day_id = find_day_id(database, day).join
-    times = find_times(database, user_id, day_id)
-    schedule[day] = times
-  end
+def find_username(username)
+  user = $database.execute("SELECT name FROM USERS WHERE name = '#{username}'")
 end
 
-def add_to_schedule(day, time, length, database, schedule, username)
-  if check_day(day)
-    schedule[day] ||= []
-    length.times do
-      if time_verification(day, time, schedule)
-        schedule[day].push(time)
-        add_to_db(database, day, time, username)
-        time += 1
-      else 
-        time += 1
-      end
-    end
-  else
-    puts "'#{day}' is not a valid day."
-  end
-  schedule
+# def update_schedule(username)
+#   schedule = {}
+#   user_id = find_user_id(username).join
+#   days = find_days(user_id)
+#   days.each do |day|
+#     day_id = find_day_id(day).join
+#     times = find_times(user_id, day_id)
+#     schedule[day] = times
+#   end
+# end
+
+# def add_to_schedule(day, time, length, schedule, username)
+#   if check_day(day)
+#     schedule[day] ||= []
+#     length.times do
+#       if time_verification(username, day, time)
+#         schedule[day].push(time)
+#         add_to_db(day, time, username)
+#         time += 1
+#       else 
+#         time += 1
+#       end
+#     end
+#   else
+#     puts "'#{day}' is not a valid day."
+#   end
+#   schedule
+# end
+
+# def delete_from_schedule(day, time, schedule, username)
+#   if time_verification(username, day, time)
+#     delete_from_db(day, time, username)
+#     schedule[day].delete(time)
+#   end
+#   schedule
+# end
+
+def input_to_id(username, day)
+  day_id = find_day_id(day)
+  user_id = find_user_id(username)
+  return day_id, user_id
 end
 
-def delete_from_schedule(database, day, time, schedule, username)
-  if time_verification(day, time, schedule)
-    delete_from_db(database, day, time, username)
-    schedule[day].delete(time)
-  end
-  schedule
-end
-
-def print_schedule(database, username)
-  user_id = find_user_id(database, username).join
-  print_days = find_days(database, user_id)
+def print_schedule(username)
+  user_id = find_user_id(username).join
+  print_days = find_days(user_id)
   puts "#{username}'s schedule for this week:"
   print_days.each do |day|
     puts "On #{day}"
-    day_id = find_day_id(database, day).join
-    print find_times(database, user_id, day_id)
+    day_id = find_day_id(day).join
+    print find_times(user_id, day_id)
   end
   puts ''
 end
@@ -90,44 +100,53 @@ if days_of_week.include?(day)
 end
 end
 
-def time_verification(day, time, schedule)
-  if !schedule[day].include?(time)
-    return true
-  elsif schedule[day].include?(time)
-    return false
-  else
-    return nil
-  end
+# removes duplicate rows if user input duplicate data
+def time_verification(user_id, day_id, time)
+  $database.execute(<<-SCRIPT
+    DELETE FROM schedules
+    WHERE user_id = #{user_id}
+    AND day_id = #{day_id}
+    AND time = #{time}
+    AND id <> ( SELECT MIN(id)
+    FROM schedules
+    GROUP BY time
+    HAVING COUNT(*) > 1);
+    SCRIPT
+    )
 end
       
-def add_to_db(database, day, time, username)
-user_id = find_user_id(database, username)
-day_id = find_day_id(database, day)
-database.execute(
-  "INSERT INTO schedules (user_id, day_id, times)
+def add_to_db(day, time, username)
+user_id = find_user_id(username)
+day_id = find_day_id(day)
+$database.execute(
+  "INSERT INTO schedules (user_id, day_id, time)
   VALUES (?,?,?)",
   [user_id, day_id, time])
+time_verification(user_id, day_id, time)
 end
 
-def delete_from_db(database, day, time, username)
-  database.execute(
-    "DELETE FROM schedules
-    WHERE user_id = #{find_user_id(database, username)}
-    AND day_id = #{find_day_id(database, day)}
-    AND time = #{time}"
+def delete_from_db(day, time, username)
+  $database.execute(<<-SCRIPT
+    DELETE FROM schedules
+    WHERE user_id = #{find_user_id(username)}
+    AND day_id = #{find_day_id(day)}
+    AND time = #{time}
+    SCRIPT
     )
 end
 
-def find_day_id(database, day)
-  database.execute("SELECT id FROM days WHERE day = '#{day}'").flatten
+# returns SQL day_id
+def find_day_id(day)
+  $database.execute("SELECT id FROM days WHERE day = '#{day}'").flatten
 end
 
-def find_user_id(database, username)
-  database.execute("SELECT id FROM users WHERE name = '#{username}'").flatten
+# returns SQL user_id
+def find_user_id(username)
+  $database.execute("SELECT id FROM users WHERE name = '#{username}'").flatten
 end
 
-def find_days(database, user_id)
-  database.execute(<<-SCRIPT
+def find_days(user_id)
+  $database.execute(<<-SCRIPT
   SELECT day
   FROM days
   WHERE id IN (
@@ -139,13 +158,13 @@ def find_days(database, user_id)
   ).flatten
 end
 
-def find_times(database, user_id, day_id)
-  database.execute(<<-SCRIPT
-  SELECT times
+def find_times(user_id, day_id)
+  $database.execute(<<-SCRIPT
+  SELECT time
   FROM schedules
   WHERE user_id=#{user_id}
   AND day_id = #{day_id}
-  ORDER BY times
+  ORDER BY time
   SCRIPT
   ).flatten
 end

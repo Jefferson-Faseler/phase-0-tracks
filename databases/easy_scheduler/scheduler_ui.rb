@@ -15,29 +15,25 @@ require_relative 'user_easyscheduler'
 require 'sqlite3'
 require 'faker'
 
-database = SQLite3::Database.new('easy_scheduler.db')
+$database = SQLite3::Database.new('easy_scheduler.db')
 # database.results_as_hash = true
 
-def new_user(database)
+def new_user
   puts 'Welcome to easy scheduler'
   puts 'Please enter a unique username:'
   new_user = gets.chomp
-  create_user(database, new_user)
-  find_username(new_user, database)
+  create_user(new_user)
+  find_username(new_user)
 end
 
-def find_username(username, database)
-  user = database.execute("SELECT name FROM USERS WHERE name = '#{username}'")
-end
-
-def existing_user(database)
+def existing_user
   puts 'Enter your username'
   user = gets.chomp
-  user = find_username(user, database)
+  user = find_username(user)
   user.flatten!.join
 end
 
-def schedule_times(username, database, schedule)
+def schedule_times(username)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts "Enter the day you would like to add to your schedule"
@@ -54,13 +50,15 @@ def schedule_times(username, database, schedule)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-  add_to_schedule(day, time, length, database, schedule, username)
-  print_schedule(schedule)
+    length.times do
+      add_to_db(day, time, username)
+      time += 1
+    end
+  print_schedule(username)
   end
-  return username
 end
 
-def unschedule_times(username, database, schedule)
+def unschedule_times(username)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts 'Enter the day you would like to remove the time from.'
@@ -73,10 +71,9 @@ def unschedule_times(username, database, schedule)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    remove_time(database, day, time, schedule, username)
-    print_schedule(schedule)
+    delete_form_db(day, time, username)
+    print_schedule(username)
   end
-  return username
 end
 
 def user?(username)
@@ -96,30 +93,29 @@ loop do
   puts "'EXIT' to quit the program"
     input = gets.chomp
       if input == '1'
-        user = new_user(database)
+        user = new_user
         puts "You are signed in as #{user}"
-        schedule = {}
       elsif input == '2'
-        user = existing_user(database)
+        user = existing_user
         puts "You are signed in as #{user}"
-        update_schedule(database, user)
+        # update_schedule(user)
       elsif input == '3'
         if user?(user)
           break
         else
-          schedule_times(user, database, schedule)
+          schedule_times(user)
         end
       elsif input == '4'
         if user?(user)
           break
         else
-          unschedule_times(user, database, schedule)
+          unschedule_times(user)
         end
       elsif input == '5'
         if user?(user)
           break
         else
-          print_schedule(database, user)
+          print_schedule(user)
         end
       elsif input == 'EXIT'
         break
