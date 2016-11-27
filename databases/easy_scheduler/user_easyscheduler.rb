@@ -111,6 +111,37 @@ def delete_from_db(day, time, username)
     AND time = ?", [user_id, day_id, time])
 end
 
+def compare_db(username, second_user)
+  user_id = find_user_id(username).to_i
+  second_user_id = find_user_id(second_user).to_i
+  matching_times = $database.execute(" 
+    SELECT COUNT(*)
+    FROM schedules
+    WHERE user_id = ?
+    OR user_id = ?", [user_id, second_user_id]).flatten.join.to_i
+  if matching_times >= 1
+    compare_and_print_days(user_id, second_user_id)
+  else
+    puts "Sorry, it looks like your schedules don't line up this week."
+  end
+end
+
+def compare_and_print_days(user_id, second_user_id)
+  matching_day_ids = $database.execute("
+    SELECT DISTINCT day_id 
+    FROM schedules 
+    WHERE user_id = ?
+    OR user_id = ?", [user_id, second_user_id]).flatten
+  matching_day_ids.each do |day|
+    user_times = find_times(user_id, day)
+    second_user_times = find_times(second_user_id, day)
+    puts "You can meet on:"
+    puts $database.execute("SELECT day FROM days WHERE id = ?", [day])
+    print "At: "
+    print user_times & second_user_times
+  end
+end
+
 # returns SQL day_id
 def find_day_id(day)
   $database.execute("SELECT id FROM days WHERE day = '#{day}'").flatten.join

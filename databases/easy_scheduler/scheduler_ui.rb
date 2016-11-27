@@ -86,6 +86,20 @@ def unschedule_times(username)
   end
 end
 
+def compare_schedules(username)
+  confirm = nil
+  until confirm == 'yes' || confirm == 'EXIT'
+    puts 'Enter the other user\'s name'
+    second_user = gets.chomp
+    puts "You entered: #{second_user}"
+    puts "Is that correct? Type 'yes' to confirm or 'EXIT' to quit"
+    confirm = gets.chomp
+  end
+  if confirm == 'yes'
+    compare_db(username, second_user)
+  end
+end
+
 def user?(username)
   if username == nil
     puts "Please sign in first"
@@ -100,6 +114,7 @@ loop do
   puts "4. Remove time from schedule"
   puts "5. Print your schedule"
   puts "6. List all users"
+  puts "7. Compare schedule with another user"
   puts "'EXIT' to quit the program"
     input = gets.chomp
       if input == '1'
@@ -128,6 +143,8 @@ loop do
         end
       elsif input == '6'
         puts $database.execute("SELECT name FROM users")
+      elsif input == '7'
+        compare_schedules(user)
       elsif input == 'EXIT'
         break
       end
