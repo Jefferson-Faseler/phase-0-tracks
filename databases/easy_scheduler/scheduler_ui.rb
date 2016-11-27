@@ -16,7 +16,6 @@ require 'sqlite3'
 require 'faker'
 
 $database = SQLite3::Database.new('easy_scheduler.db')
-# database.results_as_hash = true
 
 def new_user
   puts 'Welcome to easy scheduler'
@@ -66,7 +65,7 @@ def unschedule_times(username)
     puts 'Enter the hour you would like to remove.'
     time = gets.chomp
     puts "The day you entered is: #{day}"
-    puts "The time you entered is: #{times}"
+    puts "The time you entered is: #{time}"
     puts "Is this information correct? Type 'yes' to confirm or 'EXIT' to quit"
     confirm = gets.chomp
   end
