@@ -43,7 +43,7 @@ database = SQLite3::Database.new('easy_scheduler.db')
 create_user_table = <<-SCRIPT
   CREATE TABLE IF NOT EXISTS users(
     id INTEGER PRIMARY KEY,
-    name VARCHAR(50)
+    name VARCHAR(50) NOT NULL UNIQUE
   )
 SCRIPT
 

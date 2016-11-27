@@ -16,32 +16,31 @@ require 'sqlite3'
 require 'faker'
 
 database = SQLite3::Database.new('easy_scheduler.db')
-database.results_as_hash = true
+# database.results_as_hash = true
 
 def new_user(database)
   puts 'Welcome to easy scheduler'
   puts 'Please enter a unique username:'
-  username = gets.chomp
-  new_user = User.new(username)
-  new_user.create_user(database)
-  return new_user.name
+  new_user = gets.chomp
+  create_user(database, new_user)
+  find_username(new_user, database)
 end
 
 def find_username(username, database)
-  database.execute("SELECT name FROM USERS WHERE name = '#{username}'")
+  user = database.execute("SELECT name FROM USERS WHERE name = '#{username}'")
 end
 
 def existing_user(database)
   puts 'Enter your username'
   user = gets.chomp
-  puts find_username(user, database)
-  return user = find_username(user, database).to_s
+  user = find_username(user, database)
+  user.flatten!.join
 end
 
 def schedule_times(username, database)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
-    puts "Enter the day you would like to add to your schedule or enter 'EXIT' to quit"
+    puts "Enter the day you would like to add to your schedule"
     puts "(Days are case sensitive and cannot be abbreviated)"
     day = gets.chomp
     puts "Now enter the hour in 24 clock format"
@@ -51,7 +50,7 @@ def schedule_times(username, database)
     puts "The day you entered is: #{day}"
     puts "The time you entered is: #{time}"
     puts "And you said you would be for: #{length} hours"
-    puts "Is this information correct?"
+    puts "Is this information correct? Type 'yes' to confirm or 'EXIT' to quit"
     confirm = gets.chomp
   end
   if confirm == 'yes'
@@ -83,11 +82,10 @@ end
 def user?(username)
   if username == nil
     puts "Please sign in first"
-  else
-    return false
   end
 end
-
+    
+user = nil
 loop do
   puts "1. create a user account"
   puts "2. login to scheduler"
@@ -96,12 +94,12 @@ loop do
   puts "5. print your schedule"
   puts "'EXIT' to quit the program"
     input = gets.chomp
-    user ||= nil
       if input == '1'
         user = new_user(database)
-        p user
+        puts "You are signed in as #{user}"
       elsif input == '2'
         user = existing_user(database)
+        puts "You are signed in as #{user}"
       elsif input == '3'
         if user?(user)
           break

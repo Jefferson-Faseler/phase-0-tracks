@@ -28,102 +28,90 @@
 
 require 'sqlite3'
 require_relative 'scheduler'
-
-
-
-class User
-attr_accessor :day
-attr_reader :name
   
-  def initialize(name)
-    @name = name
-    @schedule = {}
-  end
+schedule = {}
 
-  def create_user(database)
-    database.execute("INSERT INTO users (name) VALUES (?)", [@name])
-  end
-
-  def add_to_schedule(day, time, length, database)
-    if check_day(day)
-      @schedule[day] ||= []
-      length.times do
-        if time_verification(day, time)
-          @schedule[day].push(time)
-          add_to_db(database, day, time)
-          time += 1
-        else 
-          time += 1
-        end
-      end
-    else
-      puts "'#{day}' is not a valid day."
-    end
-    @schedule
-  end
-
-  def delete_from_schedule(database, day, time)
-    if time_verification(time)
-      delete_from_db(database, day, time)
-      @schedule[day].delete(time)
-    end
-    @schedule
-  end
-
-  def print_schedule
-    puts 'Your entire schedule for this week:'
-    @schedule.each_key do |day|
-      puts "On #{day} you are free at these times:"
-      @schedule[day].each {|time| puts "#{time}"}
-    end
-  end
-
-  private
-
-  def check_day(day)
-    days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    if days_of_week.include?(day)
-      return true
-    end
-  end
-
-  def time_verification(day, time)
-    if !@schedule[day].include?(time)
-      return true
-    elsif @schedule[day].include?(time)
-      return false
-    else
-      return nil
-    end
-  end
-      
-  def add_to_db(database, day, time)
-  user_id = find_user_id(database)
-  day_id = find_day_id(database, day)
-  database.execute(
-    "INSERT INTO schedules (user_id, day_id, time)
-    VALUES (?,?,?)",
-    [user_id, day_id, time])
-  end
-
-  def delete_from_db(database, day, time)
-    database.execute(
-      "DELETE FROM schedules
-      WHERE user_id = #{find_user_id}
-      AND day_id = #{find_day_id(day)}
-      AND time = #{time}"
-      )
-  end
-
-  def find_day_id(database, day)
-    database.execute("SELECT id FROM days WHERE day = '#{day}'")
-  end
-
-  def find_user_id(database)
-    database.execute("SELECT id FROM users WHERE name = '#{@name}'")
-  end
-
+def create_user(database, username)
+  database.execute("INSERT INTO users (name) VALUES (?)", [username])
 end
+
+def add_to_schedule(day, time, length, database)
+  if check_day(day)
+    schedule[day] ||= []
+    length.times do
+      if time_verification(day, time)
+        schedule[day].push(time)
+        add_to_db(database, day, time)
+        time += 1
+      else 
+        time += 1
+      end
+    end
+  else
+    puts "'#{day}' is not a valid day."
+  end
+  schedule
+end
+
+def delete_from_schedule(database, day, time)
+  if time_verification(time)
+    delete_from_db(database, day, time)
+    schedule[day].delete(time)
+  end
+  schedule
+end
+
+def print_schedule
+  puts 'Your entire schedule for this week:'
+schedule.each_key do |day|
+    puts "On #{day} you are free at these times:"
+    schedule[day].each {|time| puts "#{time}"}
+  end
+end
+
+def check_day(day)
+  days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+if days_of_week.include?(day)
+  return true
+end
+end
+
+def time_verification(day, time)
+  if !schedule[day].include?(time)
+    return true
+  elsif schedule[day].include?(time)
+    return false
+  else
+    return nil
+  end
+end
+      
+def add_to_db(database, day, time)
+user_id = find_user_id(database)
+day_id = find_day_id(database, day)
+database.execute(
+  "INSERT INTO schedules (user_id, day_id, time)
+  VALUES (?,?,?)",
+  [user_id, day_id, time])
+end
+
+def delete_from_db(database, day, time)
+  database.execute(
+    "DELETE FROM schedules
+    WHERE user_id = #{find_user_id}
+    AND day_id = #{find_day_id(day)}
+    AND time = #{time}"
+    )
+end
+
+def find_day_id(database, day)
+  database.execute("SELECT id FROM days WHERE day = '#{day}'")
+end
+
+def find_user_id(database, username)
+  database.execute("SELECT id FROM users WHERE name = '#{username}'")
+end
+
 
 
 # ## DRIVER CODE ##
