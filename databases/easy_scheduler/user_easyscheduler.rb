@@ -34,6 +34,17 @@ def create_user(database, username)
   database.execute("INSERT INTO users (name) VALUES (?)", [username])
 end
 
+def update_schedule(database, username)
+  schedule = {}
+  user_id = find_user_id(database, username).join
+  days = find_days(database, user_id)
+  days.each do |day|
+    day_id = find_day_id(database, day).join
+    times = find_times(database, user_id, day_id)
+    schedule[day] = times
+  end
+end
+
 def add_to_schedule(day, time, length, database, schedule, username)
   if check_day(day)
     schedule[day] ||= []

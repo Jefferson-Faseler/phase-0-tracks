@@ -85,7 +85,7 @@ def user?(username)
   end
 end
 
-schedule = {}
+
 user = nil
 loop do
   puts "1. create a user account"
@@ -98,9 +98,11 @@ loop do
       if input == '1'
         user = new_user(database)
         puts "You are signed in as #{user}"
+        schedule = {}
       elsif input == '2'
         user = existing_user(database)
         puts "You are signed in as #{user}"
+        update_schedule(database, user)
       elsif input == '3'
         if user?(user)
           break
