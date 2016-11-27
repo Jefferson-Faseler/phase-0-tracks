@@ -145,6 +145,7 @@ def find_times(database, user_id, day_id)
   FROM schedules
   WHERE user_id=#{user_id}
   AND day_id = #{day_id}
+  ORDER BY times
   SCRIPT
   ).flatten
 end
