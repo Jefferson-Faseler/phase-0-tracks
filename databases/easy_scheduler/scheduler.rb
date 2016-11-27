@@ -32,7 +32,7 @@
     # else there is no matching free time slots
 
 
-
+require 'faker'
 require 'sqlite3'
 require_relative 'user_easyscheduler'
 
@@ -81,18 +81,11 @@ database.execute(create_schedule_table)
 #   end
 # end
 
-# creates test users
-def create_users(db, name)
-  db.execute("INSERT INTO users (name) VALUES (?)", [name])
-end
+## creates test users
+# def create_users(db, name)
+#   db.execute("INSERT INTO users (name) VALUES (?)", [name])
+# end
 
-10.times do
-  create_users(database, Faker::Name.name)
-end
-
-500.times do
-  user = rand(1..10)
-  day = rand(1..7)
-  time = rand(0..23)
-  add_to_db(day, time, user)
-end
+# 10.times do
+#   create_users(database, Faker::Name.name)
+# end

@@ -94,11 +94,12 @@ end
 
 user = nil
 loop do
-  puts "1. create a user account"
-  puts "2. login to scheduler"
-  puts "3. add time to schedule"
-  puts "4. remove time from schedule"
-  puts "5. print your schedule"
+  puts "1. Create a user account"
+  puts "2. Login to scheduler"
+  puts "3. Add time to schedule"
+  puts "4. Remove time from schedule"
+  puts "5. Print your schedule"
+  puts "6. List all users"
   puts "'EXIT' to quit the program"
     input = gets.chomp
       if input == '1'
@@ -125,6 +126,8 @@ loop do
         else
           print_schedule(user)
         end
+      elsif input == '6'
+        puts $database.execute("SELECT name FROM users")
       elsif input == 'EXIT'
         break
       end

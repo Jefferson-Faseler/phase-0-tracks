@@ -65,18 +65,35 @@ end
 
 # removes duplicate rows if user input duplicate data
 def time_verification(user_id, day_id, time)
-  $database.execute(<<-SCRIPT
-    DELETE FROM schedules
-    WHERE user_id = #{user_id}
-    AND day_id = #{day_id}
-    AND time = #{time}
+  count = $database.execute("
+    SELECT COUNT(*)
+    FROM schedules
+    WHERE user_id = ?
+    AND day_id = ?
+    AND time = ?
     AND id <> ( SELECT MIN(id)
     FROM schedules
     GROUP BY time
     HAVING COUNT(*) > 1);
-    SCRIPT
-    )
+    ", [user_id, day_id, time]).flatten.join.to_i
+  if count >= 2 
+    remove_duplicates(user_id, day_id, time)
+  end
 end
+
+def remove_duplicates(user_id, day_id, time)
+  $database.execute("
+  DELETE FROM schedules
+  WHERE user_id = ?
+  AND day_id = ?
+  AND time = ?
+  AND id IN ( SELECT MAX(id)
+  FROM schedules
+  GROUP BY time
+  HAVING COUNT(*) > 1);
+  ", [user_id, day_id, time])
+end
+
       
 def add_to_db(day_id, time, username)
   user_id = find_user_id(username)
@@ -85,13 +102,13 @@ def add_to_db(day_id, time, username)
 end
 
 def delete_from_db(day, time, username)
-  $database.execute(<<-SCRIPT
+  user_id = find_user_id(username)
+  day_id = find_day_id(day)
+  $database.execute("
     DELETE FROM schedules
-    WHERE user_id = #{find_user_id(username)}
-    AND day_id = #{find_day_id(day)}
-    AND time = #{time}
-    SCRIPT
-    )
+    WHERE user_id = ?
+    AND day_id = ?
+    AND time = ?", [user_id, day_id, time])
 end
 
 # returns SQL day_id
