@@ -48,11 +48,23 @@ def schedule_times(username)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    length.times do
-      add_to_db(day, time, username)
-      time += 1
-    end
+    rollover_check(time, length, day, username)
   print_schedule(username)
+  end
+end
+
+def rollover_check(time, length, day, username)
+  day_id = find_day_id(day).to_i
+  length.times do
+    if time >= 24
+      time = 0
+      day_id += 1
+    end
+    if day_id >= 8
+      day_id = 1
+    end
+    add_to_db(day_id, time, username)
+    time += 1
   end
 end
 

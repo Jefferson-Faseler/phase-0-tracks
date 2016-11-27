@@ -78,20 +78,10 @@ def time_verification(user_id, day_id, time)
     )
 end
       
-def add_to_db(day, time, username)
-user_id = find_user_id(username)
-day_id = find_day_id(day).to_i
-# adjusts time and day for run over
-  if time > 23
-    time -= 23
-    day_id += 1
-      if day_id > 7
-        day_id -= 6
-      end
-  else
+def add_to_db(day_id, time, username)
+  user_id = find_user_id(username)
   $database.execute("INSERT INTO schedules (user_id, day_id, time)VALUES (?,?,?)", [user_id, day_id, time])
   time_verification(user_id, day_id, time)
-  end
 end
 
 def delete_from_db(day, time, username)
