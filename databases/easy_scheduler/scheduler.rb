@@ -81,33 +81,18 @@ database.execute(create_schedule_table)
 #   end
 # end
 
-# # creates test users
-# def create_users(db, name)
-#   db.execute("INSERT INTO users (name) VALUES (?)", [name])
-# end
+# creates test users
+def create_users(db, name)
+  db.execute("INSERT INTO users (name) VALUES (?)", [name])
+end
 
-# 10.times do
-#   create_users(database, Faker::Name.name)
-# end
+10.times do
+  create_users(database, Faker::Name.name)
+end
 
-# # 24 hour clock
-# def add_test_schedules(db, user, day, time)
-#   db.execute("INSERT INTO schedules (user_id, day_id, time) VALUES (?,?,?)", [user, day, time])
-# end
-
-# # creates row for each available hour
-# def add_row_per_hour(db, user, day, time, length)
-#   until length == 0
-#     add_test_schedules(database, user, day, time)
-#     length -= 1
-#     time += 1
-#   end
-# end
-
-# 500.times do
-#   user = rand(1..10)
-#   day = rand(1..7)
-#   time = rand(19)
-#   length = rand(1..5) # length in hours
-#   add_row_per_hour(database, user, day, time, length)
-# end
+500.times do
+  user = rand(1..10)
+  day = rand(1..7)
+  time = rand(0..23)
+  add_to_db(day, time, user)
+end
