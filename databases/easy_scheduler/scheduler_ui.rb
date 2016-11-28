@@ -31,7 +31,7 @@ def existing_user
   user.flatten!.join
 end
 
-def schedule_times(username)
+def schedule_time(username)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts "Enter the day you would like to add to your schedule"
@@ -48,12 +48,12 @@ def schedule_times(username)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    check_before_add(time, length, day, username)
+    check_before_adding(time, length, day, username)
   print_schedule(username)
   end
 end
 
-def check_before_add(time, length, day, username)
+def check_before_adding(time, length, day, username)
   day_id = find_day_id(day).to_i
   length.times do
     if time >= 24
@@ -68,7 +68,7 @@ def check_before_add(time, length, day, username)
   end
 end
 
-def unschedule_times(username)
+def unschedule_time(username)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts 'Enter the day you would like to remove the time from.'
@@ -127,13 +127,13 @@ loop do
         if user == nil
           puts "Please sign in first"
         else
-          schedule_times(user)
+          schedule_time(user)
         end
       elsif input == '4'
         if user == nil
           puts "Please sign in first"
         else
-          unschedule_times(user)
+          unschedule_time(user)
         end
       elsif input == '5'
         if user == nil

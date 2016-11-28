@@ -29,19 +29,12 @@
 require 'sqlite3'
 require_relative 'scheduler'
 
-
 def create_user(username)
   $database.execute("INSERT INTO users (name) VALUES (?)", [username])
 end
 
 def find_username(username)
-  user = $database.execute("SELECT name FROM USERS WHERE name = '#{username}'")
-end
-
-def input_to_id(username, day)
-  day_id = find_day_id(day)
-  user_id = find_user_id(username)
-  return day_id, user_id
+  $database.execute("SELECT name FROM USERS WHERE name = ?", [username])
 end
 
 def print_schedule(username)
@@ -93,11 +86,11 @@ def remove_duplicates(user_id, day_id, time)
   HAVING COUNT(*) > 1);
   ", [user_id, day_id, time])
 end
-
       
 def add_to_db(day_id, time, username)
   user_id = find_user_id(username)
-  $database.execute("INSERT INTO schedules (user_id, day_id, time)VALUES (?,?,?)", [user_id, day_id, time])
+  $database.execute("INSERT INTO schedules (user_id, day_id, time)
+    VALUES (?,?,?)", [user_id, day_id, time])
   time_verification(user_id, day_id, time)
 end
 
@@ -144,34 +137,36 @@ end
 
 # returns SQL day_id
 def find_day_id(day)
-  $database.execute("SELECT id FROM days WHERE day = '#{day}'").flatten.join
+  $database.execute("SELECT id FROM days WHERE day = ?", [day]).flatten.join
 end
 
 # returns SQL user_id
 def find_user_id(username)
-  $database.execute("SELECT id FROM users WHERE name = '#{username}'").flatten.join
+  $database.execute("SELECT id FROM users WHERE name = ?", [username]).flatten.join
 end
 
 def find_days(user_id)
-  $database.execute(<<-SCRIPT
+  $database.execute("
   SELECT day
   FROM days
   WHERE id IN (
   SELECT day_id
   FROM schedules
-  WHERE user_id=#{user_id}
-  )
-  SCRIPT
-  ).flatten
+  WHERE user_id= ?
+  )", [user_id]).flatten
 end
 
 def find_times(user_id, day_id)
-  $database.execute(<<-SCRIPT
+  $database.execute("
   SELECT time
   FROM schedules
-  WHERE user_id=#{user_id}
-  AND day_id = #{day_id}
-  ORDER BY time
-  SCRIPT
-  ).flatten
+  WHERE user_id= ?
+  AND day_id = ?
+  ORDER BY time", [user_id, day_id]).flatten
 end
+
+# def input_to_id(username, day)
+#   day_id = find_day_id(day)
+#   user_id = find_user_id(username)
+#   return day_id, user_id
+# end

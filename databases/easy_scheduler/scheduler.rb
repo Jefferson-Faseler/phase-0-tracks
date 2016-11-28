@@ -16,7 +16,6 @@
     # develop mathematical formula for length of time causing overlap
       # ie: Wed 12:00 for 3 hours would overlap with Wed 13:00 for 2 hours
 
-
 # add test data with ruby methods
   # create method to create users with Faker gem
   # create method for populating the schedules table with random data
@@ -37,7 +36,6 @@ require 'sqlite3'
 require_relative 'user_easyscheduler'
 
 database = SQLite3::Database.new('easy_scheduler.db')
-# database.results_as_hash = true
 
 # user table command
 create_user_table = <<-SCRIPT
@@ -57,7 +55,7 @@ SCRIPT
 
 
 # schedule table command
-# acts as joiner
+# joiner table
 create_schedule_table = <<-SCRIPT
   CREATE TABLE IF NOT EXISTS schedules(
     id INTEGER PRIMARY KEY,
