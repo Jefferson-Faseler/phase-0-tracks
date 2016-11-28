@@ -1,13 +1,51 @@
-# Add method to enter new user information to database
-  # method will take user input for name and add it to database through
-  # function calls
-# output: return new user name
+# User interface with numbered menu for use
+# => Steps: Use loop to give user the menu options repeatedly
+# => take user input as numbers
+# => if the user has not signed in, give an error message
+# output: pass user to methods depending on choice
 
-# Add method for taking user input to assign to the database
-  # use until loop to take user input until the user is finished
-  # use function calls to ass input to database
-# output: return new scheduled time
+# create a new user
+# => Take user input to insert username into database
+# output: updated database
 
+# find existing user
+# => Steps: compare user input to database to find existing usename
+# output: updated user variable
+
+# walk a user through setting up a new time in their schedule
+# based upon when they are free and for how long
+# => Steps: Take user input and run them through loop until
+# => until the user confirms or quits
+# => Check user inputted times for edge cases
+# => update database
+# output: print the schedule to the user
+
+# check user input for edge cases
+# => Steps: if input rolls over the 24 hour clock it
+# => moves the day_id up once
+# => if that rolls over from Saturday, it reassigns the
+# => day to Sunday
+# output: updated input
+
+# allow user to unschedule times
+# => Steps: walk user through loop to remove one hour at a time
+# => until user confirms or quits
+# => remove the times from the database
+# output: updated database
+
+
+# print out the names of all users
+# => Steps: print the names of all users from user table
+# output: prints all names to screen
+
+# allow user to compare their free time with another user
+# => Steps: take user input for the second user's name
+# => pass on to methods to find all matching days and times, if any
+# output: print matching schedules to screen
+
+# check to see if user is signed in
+# => Steps: checks if user is still equal to nil
+# output: prints message is not signed in
 
 require_relative 'scheduler'
 require_relative 'user_easyscheduler'
@@ -30,7 +68,7 @@ def existing_user
   user.flatten!.join
 end
 
-def schedule_time(username)
+def schedule_times(username)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts "Enter the day you would like to add to your schedule"
@@ -47,12 +85,12 @@ def schedule_time(username)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    check_before_adding(time, length, day, username)
+    check_before_add(time, length, day, username)
   print_schedule(username)
   end
 end
 
-def check_before_adding(time, length, day, username)
+def check_before_add(time, length, day, username)
   day_id = find_day_id(day).to_i
   length.times do
     if time >= 24
@@ -67,7 +105,7 @@ def check_before_adding(time, length, day, username)
   end
 end
 
-def unschedule_time(username)
+def unschedule_times(username)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts 'Enter the day you would like to remove the time from.'
@@ -99,11 +137,12 @@ def compare_schedules(username)
   end
 end
 
-def user?(username)
-  if username == nil
-    puts "Please sign in first"
-  end
-end
+
+puts "Welcome to the easy scheduler!"
+puts "Here you can input your free time!"
+puts "That free time can be kept track of, scheduled, or even compared to"
+puts "another user in our database."
+puts "Because free time and breaks are important."
 
 user = nil
 loop do
@@ -126,13 +165,13 @@ loop do
         if user == nil
           puts "Please sign in first"
         else
-          schedule_time(user)
+          schedule_times(user)
         end
       elsif input == '4'
         if user == nil
           puts "Please sign in first"
         else
-          unschedule_time(user)
+          unschedule_times(user)
         end
       elsif input == '5'
         if user == nil
