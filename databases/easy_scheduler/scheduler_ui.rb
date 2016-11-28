@@ -58,7 +58,7 @@ def new_user
   puts 'Please enter a unique username:'
   new_user = gets.chomp
   create_user(new_user)
-  find_username(new_user)
+  find_username(new_user).flatten.join
 end
 
 def existing_user
