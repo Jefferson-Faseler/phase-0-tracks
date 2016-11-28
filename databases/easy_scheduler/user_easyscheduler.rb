@@ -85,7 +85,7 @@ def create_user(username)
 end
 
 def find_username(username)
-  $database.execute("SELECT name FROM USERS WHERE name = ?", [username])
+  user = $database.execute("SELECT name FROM USERS WHERE name = ?", [username])
 end
 
 def print_schedule(username)
@@ -216,9 +216,3 @@ def find_times(user_id, day_id)
   AND day_id = ?
   ORDER BY time", [user_id, day_id]).flatten
 end
-
-# def input_to_id(username, day)
-#   day_id = find_day_id(day)
-#   user_id = find_user_id(username)
-#   return day_id, user_id
-# end
