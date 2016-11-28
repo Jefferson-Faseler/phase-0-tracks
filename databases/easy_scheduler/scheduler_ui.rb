@@ -48,7 +48,7 @@
 # output: prints message is not signed in
 
 require_relative 'scheduler'
-require_relative 'user_easyscheduler'
+require_relative 'scheduler_method'
 require 'sqlite3'
 
 $database = SQLite3::Database.new('easy_scheduler.db')

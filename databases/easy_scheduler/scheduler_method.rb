@@ -102,9 +102,9 @@ end
 
 def check_day(day)
   days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-if days_of_week.include?(day)
-  return true
-end
+  if days_of_week.include?(day)
+    return true
+  end
 end
 
 # removes duplicate rows if user input duplicate data
