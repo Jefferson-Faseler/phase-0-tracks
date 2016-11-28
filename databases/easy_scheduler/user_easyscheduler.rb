@@ -1,30 +1,81 @@
-# Allow each user to have their own schedule viewable by them 
-# and accessible for comparison to another user's schedule
-  # create user class with intialized hash empty 
-  # (later to be filled with each hour that is free)
-    # steps: create user class with initialize method that takes name as parameter
-    # set two instance variables name and schedule
-  # output: returns empty schedule
+# create user for people new to the program
+# => Steps: pass in username as parameter
+# => insert the new username into the database in users table
+# output: return nothing if successful
 
-# Allow each user to add times to their schedule
-  # insert nested key value pairs for day and time into hash
-    # create empty array for day when passed as an argument
-      # use ||= operator so that the day is not overwritten
-    # when user enters day it creates key, with nested array for value
-    # array elements are hour blocks the user is free
-  # output: return updated hash
+# find the username of an existing user
+# => Steps: pass in username as parameter
+# => assign the output from database users table
+# => to local method variable for readability
+# output: return that local method variable
 
-# Allow user to remove a date from their schedule
-  # use #delete on day the user would like to remove
-  # output: return updated schedule
+# print a user's schedule
+# => Steps: pass in username as parameter
+# => find user_id with method
+# => find all the days that match user_id from schedules table
+# => print out each day and each time for that day with interpolation
+# => find each day_id with method
+# output: print to screen
 
-# Allow user to print their schedule
-  # use interpolation and iteration to display days and times
-  # output: to screen and return schedule
+# check for proper user input for typed days
+# => Steps: pass in user input as parameter
+# => If day parameter is or is not in the array, return output
+# output: return true or false
 
-# Do not allow user to enter duplicate times in day
-  # run uniq! each time user adds time to hash
-  # output: return unique hash
+# verify that user input time is not already in the database
+# => Steps: collect count of all times matching parameters
+# => If the count is more than 1 go to method to remove duplicate times
+# => Else move on
+# output: return true or false for duplicate times
+
+# remove duplicate times
+# => Steps: remove all times matching parameters 
+# => Except for the time with the biggest id
+# output: return updated database
+
+# add user input times to the database
+# => Steps: Pass in user input as parameters
+# => Find user_id to add to schedules table
+# => add the input to the schedules table
+# => Call time verification method
+# output: updated database
+
+# remove user input times from the database
+# => Steps: Pass user input as parameters
+# => Find user_id to remove from schedules table
+# => delete all times matching parameters
+# output: updated schedules table
+
+# compare the days a user has with another user they wish to meet with
+# => Steps: pass user input as parameters
+# => find both user ids
+# => compare both user ids to schedules table
+# => if they have days that match go to next method for comparing times
+# => if they do not have matching days print message
+# output: move on to next method or print message
+
+# compare and print matching user times
+# => Steps: pass parameters from comparing days
+# => find all time ids from schedules table
+# => compare and keep all matching times
+# outout: print all matching times as array
+
+# find day id from days table
+# => Steps: compare day parameter to days table
+# output: return day_id
+
+# find user id from users table
+# => Steps: compare username parameter to users table
+# output: return user_id
+
+# find all days matching user_id
+# => Steps: use subquery to compare user_id parameter to schedules table
+# => return to query all matching day_ids and find the day names for each
+# output: return all matching days by name from schedules table
+
+# find all times belonging to a user in a day
+# => Steps: compare user_id and day_id to schedules table
+# output: return all matching times from schedules table
 
 require 'sqlite3'
 require_relative 'scheduler'
@@ -104,7 +155,7 @@ def delete_from_db(day, time, username)
     AND time = ?", [user_id, day_id, time])
 end
 
-def compare_db(username, second_user)
+def compare_user_days(username, second_user)
   user_id = find_user_id(username).to_i
   second_user_id = find_user_id(second_user).to_i
   matching_times = $database.execute(" 
@@ -113,13 +164,13 @@ def compare_db(username, second_user)
     WHERE user_id = ?
     OR user_id = ?", [user_id, second_user_id]).flatten.join.to_i
   if matching_times >= 1
-    compare_and_print_days(user_id, second_user_id)
+    compare_and_print_user_times(user_id, second_user_id)
   else
     puts "Sorry, it looks like your schedules don't line up this week."
   end
 end
 
-def compare_and_print_days(user_id, second_user_id)
+def compare_and_print_user_times(user_id, second_user_id)
   matching_day_ids = $database.execute("
     SELECT DISTINCT day_id 
     FROM schedules 
@@ -132,6 +183,7 @@ def compare_and_print_days(user_id, second_user_id)
     puts $database.execute("SELECT day FROM days WHERE id = ?", [day])
     print "At: "
     print user_times & second_user_times
+    print "\n"
   end
 end
 

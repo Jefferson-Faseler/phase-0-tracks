@@ -12,7 +12,6 @@
 require_relative 'scheduler'
 require_relative 'user_easyscheduler'
 require 'sqlite3'
-require 'faker'
 
 $database = SQLite3::Database.new('easy_scheduler.db')
 
@@ -96,7 +95,7 @@ def compare_schedules(username)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    compare_db(username, second_user)
+    compare_user_days(username, second_user)
   end
 end
 
