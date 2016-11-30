@@ -14,3 +14,13 @@ function playDead() {
   var photo = document.getElementById('goldfish-photo');
   photo.setAttribute('class', 'rotated-goldfish');
 }
+
+function addRedBorder(event) {
+  console.log('clicked it');
+  event.target.style.border = '5px solid red';
+}
+
+
+document.getElementById("left").addEventListener("click", function(){
+   this.style.backgroundColor = "red";
+});
