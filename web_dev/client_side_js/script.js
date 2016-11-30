@@ -8,3 +8,9 @@ var getList = document.getElementById('elementstring')
 var newListEl = document.createElement('li');
 newListEl.appendChild(document.createTextNode('My goldfish is beautiful'));
 getList.appendChild(newListEl);
+
+
+function playDead() {
+  var photo = document.getElementById('goldfish-photo');
+  photo.setAttribute('class', 'rotated-goldfish');
+}

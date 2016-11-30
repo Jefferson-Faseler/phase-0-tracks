@@ -2,3 +2,7 @@
   width: 60%;
   height: auto;
 }
+
+.rotated-goldfish {
+  transform: rotate(180deg);
+}
