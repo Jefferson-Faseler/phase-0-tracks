@@ -9,3 +9,12 @@ jQuery plan
   ** unless I run out of coffee or get hungry
 
 add resources to bookmark collection
+
+study concepts
+* selectors
+* chaining
+* how to cache
+* jQuery variable names
+* ajax
+* methods
+* on and off
