@@ -1,57 +1,6 @@
-# User interface with numbered menu for use
-# => Steps: Use loop to give user the menu options repeatedly
-# => take user input as numbers
-# => if the user has not signed in, give an error message
-# output: pass user to methods depending on choice
-
-# create a new user
-# => Take user input to insert username into database
-# output: updated database
-
-# find existing user
-# => Steps: compare user input to database to find existing usename
-# output: updated user variable
-
-# walk a user through setting up a new time in their schedule
-# based upon when they are free and for how long
-# => Steps: Take user input and run them through loop until
-# => until the user confirms or quits
-# => Check user inputted times for edge cases
-# => update database
-# output: print the schedule to the user
-
-# check user input for edge cases
-# => Steps: if input rolls over the 24 hour clock it
-# => moves the day_id up once
-# => if that rolls over from Saturday, it reassigns the
-# => day to Sunday
-# output: updated input
-
-# allow user to unschedule times
-# => Steps: walk user through loop to remove one hour at a time
-# => until user confirms or quits
-# => remove the times from the database
-# output: updated database
-
-
-# print out the names of all users
-# => Steps: print the names of all users from user table
-# output: prints all names to screen
-
-# allow user to compare their free time with another user
-# => Steps: take user input for the second user's name
-# => pass on to methods to find all matching days and times, if any
-# output: print matching schedules to screen
-
-# check to see if user is signed in
-# => Steps: checks if user is still equal to nil
-# output: prints message is not signed in
-
 require_relative 'scheduler'
 require_relative 'scheduler_method'
 require 'sqlite3'
-
-$database = SQLite3::Database.new('easy_scheduler.db')
 
 def new_user
   puts 'Welcome to easy scheduler'
@@ -85,12 +34,23 @@ def schedule_times(username)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    check_before_add(time, length, day, username)
-  print_schedule(username)
+    if day_of_week?(day)
+      rollover_time_check(time, length, day, username)
+      print_schedule(username)
+    else
+      puts "#{day} is not a day of the week."
+    end
   end
 end
 
-def check_before_add(time, length, day, username)
+def day_of_week?(day)
+  days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  if days_of_week.include?(day)
+    return true
+  end
+end
+
+def rollover_time_check(time, length, day, username)
   day_id = find_day_id(day).to_i
   length.times do
     if time >= 24
@@ -105,7 +65,7 @@ def check_before_add(time, length, day, username)
   end
 end
 
-def unschedule_times(username)
+def unschedule_times!(username)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts 'Enter the day you would like to remove the time from.'
@@ -118,12 +78,12 @@ def unschedule_times(username)
     confirm = gets.chomp
   end
   if confirm == 'yes'
-    delete_from_db(day, time, username)
+    delete_from_db!(day, time, username)
     print_schedule(username)
   end
 end
 
-def compare_schedules(username)
+def compare_two_schedules(username)
   confirm = nil
   until confirm == 'yes' || confirm == 'EXIT'
     puts 'Enter the other user\'s name'
@@ -134,6 +94,14 @@ def compare_schedules(username)
   end
   if confirm == 'yes'
     compare_user_days(username, second_user)
+  end
+end
+
+def signed_in?(user)
+  if user != nil
+    return true
+  else 
+    puts "Please sign in first" 
   end
 end
 
@@ -162,27 +130,23 @@ loop do
         user = existing_user
         puts "You are signed in as #{user}"
       elsif input == '3'
-        if user == nil
-          puts "Please sign in first"
-        else
+        if signed_in?(user)
           schedule_times(user)
         end
       elsif input == '4'
-        if user == nil
-          puts "Please sign in first"
-        else
-          unschedule_times(user)
+        if signed_in?(user)
+          unschedule_times!(user)
         end
       elsif input == '5'
-        if user == nil
-          puts "Please sign in first"
-        else
+        if signed_in?(user)
           print_schedule(user)
         end
       elsif input == '6'
         puts $database.execute("SELECT name FROM users")
       elsif input == '7'
-        compare_schedules(user)
+        if signed_in?(user)
+          compare_two_schedules(user)
+        end
       elsif input == 'EXIT'
         break
       end
