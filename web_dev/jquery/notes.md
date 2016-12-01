@@ -9,3 +9,9 @@ jQuery plan
   ** unless I run out of coffee or get hungry
 
 add resources to bookmark collection
+
+My result was a poor attempt so I tried again this evening. Here is what happened:
+* I Read 200 pages of Jon Duckett's Javascript & jQuery book
+* I retained a lot of useful information
+* My comfort with javascript grew
+* I spent three hours on this (sorry)
