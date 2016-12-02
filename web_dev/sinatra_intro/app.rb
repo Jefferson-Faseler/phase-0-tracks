@@ -62,3 +62,12 @@ get '/:num1/plus/:num2' do
   sum = params[:num1].to_i + params[:num2].to_i
   "#{sum.to_s}"
 end
+
+get '/find_students_by_campus/:campus' do
+  students = db.execute("SELECT * FROM students WHERE campus=? ORDER BY name", [params[:campus]])
+  response = ""
+  students.each do |student|
+    response << "#{student['name']}<br>"
+  end
+  response
+end
