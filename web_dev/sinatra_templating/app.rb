@@ -24,4 +24,10 @@ post '/students' do
   redirect '/'
 end
 
+get '/by_campus' do
+  @students = db.execute("SELECT * FROM students ORDER BY campus")
+  erb :template
+end
+
+
 # add static resources
