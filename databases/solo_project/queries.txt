@@ -1,0 +1,269 @@
+1. Displaying businesses table
+query:
+SELECT * FROM businesses;  
+
+output:
+1|Burly|coffee|4
+2|Bravo|grocery|6
+3|DeKalb Hardware|hardware|2
+4|BC|bodega|3
+
+2. Updating based upon condition in subquery 
+  Derek just got hired. (What an inefficient database!)
+query:
+UPDATE businesses 
+SET num_of_employees=(
+SELECT count(business_id)
+FROM employees
+WHERE business_id=1) 
+WHERE name='Burly';
+
+data:
+1|Burly|coffee|5
+2|Bravo|grocery|6
+3|DeKalb Hardware|hardware|2
+4|BC|bodega|3
+
+3. displaying both tables
+query:
+SELECT *
+FROM businesses, employees
+WHERE employees.business_id = businesses.id;
+
+output:
+4|BC|bodega|3|1|4|Conrad Gallo|20050118
+4|BC|bodega|3|2|4|Dominic Stirling|20060216
+1|Burly|coffee|5|3|1|Cesar Corndio|20111220
+1|Burly|coffee|5|4|1|Robert Orlando|20150713
+3|DeKalb Hardware|hardware|2|5|3|Ashley Miles|20090203
+1|Burly|coffee|5|6|1|Hannah Sampson|20140221
+2|Bravo|grocery|6|7|2|Will Blaine|20151118
+1|Burly|coffee|5|8|1|Amanda Lincoln|20070724
+2|Bravo|grocery|6|9|2|Rachel Derby|20160217
+2|Bravo|grocery|6|10|2|Miles Anthony|20060609
+2|Bravo|grocery|6|11|2|Emory Jaxon|20110916
+4|BC|bodega|3|12|4|Esteban Andres|20140617
+3|DeKalb Hardware|hardware|2|13|3|Makram Abdul|20090203
+2|Bravo|grocery|6|14|2|Bailey Jones|20140319
+2|Bravo|grocery|6|15|2|Ben Fenton|20150112
+1|Burly|coffee|5|16|1|Derek Ward|20161104
+
+
+4. displaying user friendly data alphabetically by business name
+query:
+SELECT b.name, e.name, e.start_date
+FROM businesses b 
+JOIN employees e
+ON e.business_id = b.id
+ORDER BY b.name;
+
+output:
+BC|Conrad Gallo|20050118
+BC|Dominic Stirling|20060216
+BC|Esteban Andres|20140617
+Bravo|Will Blaine|20151118
+Bravo|Rachel Derby|20160217
+Bravo|Miles Anthony|20060609
+Bravo|Emory Jaxon|20110916
+Bravo|Bailey Jones|20140319
+Bravo|Ben Fenton|20150112
+Burly|Cesar Corndio|20111220
+Burly|Robert Orlando|20150713
+Burly|Hannah Sampson|20140221
+Burly|Amanda Lincoln|20070724
+Burly|Derek Ward|20161104
+DeKalb Hardware|Ashley Miles|20090203
+DeKalb Hardware|Makram Abdul|20090203
+
+5. Will and another employee who started in 2014 were stealing twinkies from Bravo
+query:
+DELETE FROM employees
+WHERE id IN 
+(SELECT id
+FROM employees
+WHERE start_date LIKE '2014____'
+AND business_id =2
+OR name = 'Will Blaine');
+
+data:
+1|4|Conrad Gallo|20050118
+2|4|Dominic Stirling|20060216
+3|1|Cesar Corndio|20111220
+4|1|Robert Orlando|20150713
+5|3|Ashley Miles|20090203
+6|1|Hannah Sampson|20140221
+8|1|Amanda Lincoln|20070724
+9|2|Rachel Derby|20160217
+10|2|Miles Anthony|20060609
+11|2|Emory Jaxon|20110916
+12|4|Esteban Andres|20140617
+13|3|Makram Abdul|20090203
+15|2|Ben Fenton|20150112
+16|1|Derek Ward|20161104
+
+
+
+--------------------------------------------------------------------
+
+Hold on while I update this inconvenient database...
+UPDATE businesses 
+SET num_of_employees=(
+SELECT count(business_id)
+FROM employees
+WHERE business_id=2) 
+WHERE name='Bravo';
+
+data:
+2|Bravo|grocery|4
+
+Oh, and the hardware closed down, but luckily the employees were
+able to take over for the newly opened positions at Bravo! Lucky!
+
+---------------------------------------------------------------------
+RELEASE 3
+query: INNER JOIN
+SELECT e.id, b.name, e.name
+FROM businesses b
+INNER JOIN employees e
+ON b.id = e.business_id;
+
+output: 
+1|BC|Conrad Gallo
+2|BC|Dominic Stirling
+3|Burly|Cesar Corndio
+4|Burly|Robert Orlando
+5|Bravo|Ashley Miles
+6|Burly|Hannah Sampson
+8|Burly|Amanda Lincoln
+9|Bravo|Rachel Derby
+10|Bravo|Miles Anthony
+11|Bravo|Emory Jaxon
+12|BC|Esteban Andres
+13|Bravo|Makram Abdul
+15|Bravo|Ben Fenton
+16|Burly|Derek Ward
+
+
+query: LEFT JOIN
+SELECT b.name, e.name
+FROM businesses b
+LEFT JOIN employees e
+ON b.id = e.business_id;
+
+output:
+BC|Conrad Gallo
+BC|Dominic Stirling
+BC|Esteban Andres
+Bravo|Ashley Miles
+Bravo|Ben Fenton
+Bravo|Emory Jaxon
+Bravo|Makram Abdul
+Bravo|Miles Anthony
+Bravo|Rachel Derby
+Burly|Amanda Lincoln
+Burly|Cesar Corndio
+Burly|Derek Ward
+Burly|Hannah Sampson
+Burly|Robert Orlando
+DeKalb Hardware| 
+
+
+query: FULL JOIN
+SELECT b.name, e.name, b.num_of_employees
+FROM businesses b
+LEFT JOIN employees e
+ON b.id = e.business_id;
+
+output:
+Burly|Amanda Lincoln|5
+Burly|Cesar Corndio|5
+Burly|Derek Ward|5
+Burly|Hannah Sampson|5
+Burly|Robert Orlando|5
+Bravo|Ashley Miles|6
+Bravo|Ben Fenton|6
+Bravo|Emory Jaxon|6
+Bravo|Makram Abdul|6
+Bravo|Miles Anthony|6
+Bravo|Rachel Derby|6
+DeKalb Hardware||0
+BC|Conrad Gallo|3
+BC|Dominic Stirling|3
+BC|Esteban Andres|3
+
+
+query: SELF JOIN
+SELECT b.name, a.num_of_employees
+FROM businesses a, businesses b
+WHERE a.num_of_employees < b.num_of_employees;
+
+output:
+Bravo|5
+Burly|0
+Bravo|0
+BC|0
+Burly|3
+Bravo|3
+
+
+query: CARTESIAN JOIN
+SELECT *
+FROM businesses, employees;
+
+output:
+1|Burly|coffee|5|1|4|Conrad Gallo|20050118
+1|Burly|coffee|5|2|4|Dominic Stirling|20060216
+1|Burly|coffee|5|3|1|Cesar Corndio|20111220
+1|Burly|coffee|5|4|1|Robert Orlando|20150713
+1|Burly|coffee|5|5|2|Ashley Miles|20090203
+1|Burly|coffee|5|6|1|Hannah Sampson|20140221
+1|Burly|coffee|5|8|1|Amanda Lincoln|20070724
+1|Burly|coffee|5|9|2|Rachel Derby|20160217
+1|Burly|coffee|5|10|2|Miles Anthony|20060609
+1|Burly|coffee|5|11|2|Emory Jaxon|20110916
+1|Burly|coffee|5|12|4|Esteban Andres|20140617
+1|Burly|coffee|5|13|2|Makram Abdul|20090203
+1|Burly|coffee|5|15|2|Ben Fenton|20150112
+1|Burly|coffee|5|16|1|Derek Ward|20161104
+2|Bravo|grocery|6|1|4|Conrad Gallo|20050118
+2|Bravo|grocery|6|2|4|Dominic Stirling|20060216
+2|Bravo|grocery|6|3|1|Cesar Corndio|20111220
+2|Bravo|grocery|6|4|1|Robert Orlando|20150713
+2|Bravo|grocery|6|5|2|Ashley Miles|20090203
+2|Bravo|grocery|6|6|1|Hannah Sampson|20140221
+2|Bravo|grocery|6|8|1|Amanda Lincoln|20070724
+2|Bravo|grocery|6|9|2|Rachel Derby|20160217
+2|Bravo|grocery|6|10|2|Miles Anthony|20060609
+2|Bravo|grocery|6|11|2|Emory Jaxon|20110916
+2|Bravo|grocery|6|12|4|Esteban Andres|20140617
+2|Bravo|grocery|6|13|2|Makram Abdul|20090203
+2|Bravo|grocery|6|15|2|Ben Fenton|20150112
+2|Bravo|grocery|6|16|1|Derek Ward|20161104
+3|DeKalb Hardware|hardware|0|1|4|Conrad Gallo|20050118
+3|DeKalb Hardware|hardware|0|2|4|Dominic Stirling|20060216
+3|DeKalb Hardware|hardware|0|3|1|Cesar Corndio|20111220
+3|DeKalb Hardware|hardware|0|4|1|Robert Orlando|20150713
+3|DeKalb Hardware|hardware|0|5|2|Ashley Miles|20090203
+3|DeKalb Hardware|hardware|0|6|1|Hannah Sampson|20140221
+3|DeKalb Hardware|hardware|0|8|1|Amanda Lincoln|20070724
+3|DeKalb Hardware|hardware|0|9|2|Rachel Derby|20160217
+3|DeKalb Hardware|hardware|0|10|2|Miles Anthony|20060609
+3|DeKalb Hardware|hardware|0|11|2|Emory Jaxon|20110916
+3|DeKalb Hardware|hardware|0|12|4|Esteban Andres|20140617
+3|DeKalb Hardware|hardware|0|13|2|Makram Abdul|20090203
+3|DeKalb Hardware|hardware|0|15|2|Ben Fenton|20150112
+3|DeKalb Hardware|hardware|0|16|1|Derek Ward|20161104
+4|BC|bodega|3|1|4|Conrad Gallo|20050118
+4|BC|bodega|3|2|4|Dominic Stirling|20060216
+4|BC|bodega|3|3|1|Cesar Corndio|20111220
+4|BC|bodega|3|4|1|Robert Orlando|20150713
+4|BC|bodega|3|5|2|Ashley Miles|20090203
+4|BC|bodega|3|6|1|Hannah Sampson|20140221
+4|BC|bodega|3|8|1|Amanda Lincoln|20070724
+4|BC|bodega|3|9|2|Rachel Derby|20160217
+4|BC|bodega|3|10|2|Miles Anthony|20060609
+4|BC|bodega|3|11|2|Emory Jaxon|20110916
+4|BC|bodega|3|12|4|Esteban Andres|20140617
+4|BC|bodega|3|13|2|Makram Abdul|20090203
+4|BC|bodega|3|15|2|Ben Fenton|20150112
+4|BC|bodega|3|16|1|Derek Ward|20161104

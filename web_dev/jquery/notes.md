@@ -15,3 +15,4 @@ My result was a poor attempt so I tried again this evening. Here is what happene
 * I retained a lot of useful information
 * My comfort with javascript grew
 * I spent three hours on this (sorry)
+* I did not get much jquery done in 45 minutes
